@@ -1,38 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GLP-1 Savings Finder - Find Financial Assistance for Your Medication</title>
-    <meta name="description" content="Compare savings programs, patient assistance, and discount options for all major GLP-1 receptor agonists. Many patients can reduce costs to $25/month or less.">
+    <meta name="description"
+        content="Compare savings programs, patient assistance, and discount options for all major GLP-1 receptor agonists. Many patients can reduce costs to $25/month or less.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-        <svg style="display:none;">
-            <symbol id="pill-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="8" y="4" width="8" height="16" rx="4"/>
-                <line x1="8" y1="12" x2="16" y2="12"/>
-            </symbol>
-            <symbol id="external-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-            </symbol>
-            <symbol id="phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </symbol>
-            <symbol id="injection-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m18 2 4 4"/>
-                <path d="m17 7 3-3"/>
-                <path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/>
-                <path d="m9 11 4 4"/>
-                <path d="m5 19-3 3"/>
-                <path d="m14 4 6 6"/>
-            </symbol>
-        </svg>
+    <svg style="display:none;">
+        <symbol id="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="9" width="4" height="12" rx="1" />
+            <rect x="6" y="5" width="4" height="16" rx="1" />
+            <rect x="10" y="11" width="4" height="10" rx="1" />
+            <rect x="14" y="3" width="4" height="18" rx="1" />
+            <rect x="18" y="9" width="4" height="12" rx="1" />
+        </symbol>
+        <symbol id="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+        </symbol>
+        <symbol id="pill-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="8" y="4" width="8" height="16" rx="4" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+        </symbol>
+        <symbol id="external-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+        </symbol>
+        <symbol id="phone-icon-mini" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </symbol>
+        <symbol id="injection-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m18 2 4 4" />
+            <path d="m17 7 3-3" />
+            <path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5" />
+            <path d="m9 11 4 4" />
+            <path d="m5 19-3 3" />
+            <path d="m14 4 6 6" />
+        </symbol>
+        <symbol id="check-box-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+        </symbol>
+        <symbol id="dollar-sign-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </symbol>
+        <symbol id="phone-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </symbol>
+    </svg>
     </span>
     <!-- Animated background pattern -->
     <div class="background-pattern"></div>
@@ -43,12 +82,8 @@
             <div class="header-content">
                 <div class="header-left">
                     <div class="logo-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="9" width="4" height="12" rx="1"/>
-                            <rect x="6" y="5" width="4" height="16" rx="1"/>
-                            <rect x="10" y="11" width="4" height="10" rx="1"/>
-                            <rect x="14" y="3" width="4" height="18" rx="1"/>
-                            <rect x="18" y="9" width="4" height="12" rx="1"/>
+                        <svg width="28" height="28">
+                            <use href="#logo-icon" />
                         </svg>
                     </div>
                     <div>
@@ -57,10 +92,8 @@
                     </div>
                 </div>
                 <div class="header-badge">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    <svg width="16" height="16">
+                        <use href="#info-icon" />
                     </svg>
                     <span id="drug-count">7 medications with savings options</span>
                 </div>
@@ -75,7 +108,8 @@
                     <span class="hero-gradient">GLP-1 Medications</span>
                 </h2>
                 <p class="hero-description">
-                    Compare savings programs, patient assistance, and discount options for all major GLP-1 receptor agonists.
+                    Compare savings programs, patient assistance, and discount options for all major GLP-1 receptor
+                    agonists.
                     <span class="hero-subtext">
                         Many patients can reduce costs to $25 per month or less with manufacturer programs.
                     </span>
@@ -85,27 +119,17 @@
             <!-- Search Bar >
             <section class="search-section">
                 <div class="search-wrapper">
-                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    <input 
-                        type="text" 
-                        id="search-input"
-                        class="search-input" 
-                        placeholder="Search by brand name, generic name, or type..."
-                        aria-label="Search medications"
-                    >
+                    <input type="text" id="search-input" class="search-input"
+                        placeholder="Search by brand name, generic name, or type..." aria-label="Search medications">
                 </div>
-            </section -->
+            </section-->
 
             <!-- Key Information Cards -->
             <section class="info-cards">
                 <div class="info-card">
                     <div class="info-icon info-icon-green">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <use href="#check-box-icon" />
                         </svg>
                     </div>
                     <h3 class="info-title">Patient Assistance Programs</h3>
@@ -116,9 +140,8 @@
 
                 <div class="info-card">
                     <div class="info-icon info-icon-blue">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"/>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <use href="#dollar-sign-icon" />
                         </svg>
                     </div>
                     <h3 class="info-title">Savings Cards</h3>
@@ -129,8 +152,8 @@
 
                 <div class="info-card">
                     <div class="info-icon info-icon-purple">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <use href="#phone-icon" />
                         </svg>
                     </div>
                     <h3 class="info-title">Direct Support</h3>
@@ -142,8 +165,8 @@
 
             <!-- Drug Cards Container -->
             <section id="drug-cards-container" class="drug-cards">
-              
-            
+
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-indigo"></div>
                     <div class="drug-card-content">
@@ -153,7 +176,7 @@
                                     <div class="drug-icon gradient-indigo">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -181,10 +204,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://mounjaro.lilly.com/savings-resources" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-indigo">
+                                <a href="https://mounjaro.lilly.com/savings-resources" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-indigo">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -192,7 +213,7 @@
                                 </a>
                                 <a href="tel:833-807-6576" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>833-807-6576</span>
                                 </a>
@@ -200,7 +221,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-orange"></div>
                     <div class="drug-card-content">
@@ -210,7 +231,7 @@
                                     <div class="drug-icon gradient-orange">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -238,10 +259,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://www.novocare.com/diabetes/products/ozempic/savings-offer.html" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-orange">
+                                <a href="https://www.novocare.com/diabetes/products/ozempic/savings-offer.html" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-orange">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -249,7 +268,7 @@
                                 </a>
                                 <a href="tel:1-866-310-7549" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>1-866-310-7549</span>
                                 </a>
@@ -257,7 +276,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-amber"></div>
                     <div class="drug-card-content">
@@ -267,7 +286,7 @@
                                     <div class="drug-icon gradient-amber">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#pill-icon" />
+                                            <use href="#pill-icon" />
                                             
                                         </svg>
                                     </div>
@@ -295,10 +314,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-amber">
+                                <a href="https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-amber">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -306,7 +323,7 @@
                                 </a>
                                 <a href="tel:1-833-275-2233" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>1-833-275-2233</span>
                                 </a>
@@ -314,7 +331,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-emerald"></div>
                     <div class="drug-card-content">
@@ -324,7 +341,7 @@
                                     <div class="drug-icon gradient-emerald">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -352,10 +369,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://trulicity.lilly.com/savings-resources" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-emerald">
+                                <a href="https://trulicity.lilly.com/savings-resources" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-emerald">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -363,7 +378,7 @@
                                 </a>
                                 <a href="tel:1-844-878-4636" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>1-844-878-4636</span>
                                 </a>
@@ -371,7 +386,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-pink"></div>
                     <div class="drug-card-content">
@@ -381,7 +396,7 @@
                                     <div class="drug-icon gradient-pink">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -409,10 +424,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://www.novocare.com/diabetes/products/victoza.html" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-pink">
+                                <a href="https://www.novocare.com/diabetes/products/victoza.html" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-pink">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -420,7 +433,7 @@
                                 </a>
                                 <a href="tel:1-866-310-7549" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>1-866-310-7549</span>
                                 </a>
@@ -428,7 +441,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-cyan"></div>
                     <div class="drug-card-content">
@@ -438,7 +451,7 @@
                                     <div class="drug-icon gradient-cyan">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -466,10 +479,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-cyan">
+                                <a href="https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-cyan">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -477,7 +488,7 @@
                                 </a>
                                 <a href="tel:1-888-793-1218" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>1-888-793-1218</span>
                                 </a>
@@ -485,7 +496,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
                 <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
                     <div class="drug-card-accent gradient-sky"></div>
                     <div class="drug-card-content">
@@ -495,7 +506,7 @@
                                     <div class="drug-icon gradient-sky">
                                         <svg width="24" height="24">
                                             
-                                                <use href="#injection-icon" />
+                                            <use href="#injection-icon" />
                                             
                                         </svg>
                                     </div>
@@ -523,10 +534,8 @@
                             </div>
 
                             <div class="drug-actions">
-                                <a href="https://zepbound.lilly.com/savings-resources" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="btn btn-primary gradient-sky">
+                                <a href="https://zepbound.lilly.com/savings-resources" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-primary gradient-sky">
                                     <span>View Savings Programs</span>
                                     <svg width="16" height="16">
                                         <use href="#external-link-icon" />
@@ -534,7 +543,7 @@
                                 </a>
                                 <a href="tel:833-807-6576" class="btn btn-secondary">
                                     <svg width="16" height="16">
-                                        <use href="#phone-icon" />
+                                        <use href="#phone-icon-mini" />
                                     </svg>
                                     <span>833-807-6576</span>
                                 </a>
@@ -542,7 +551,7 @@
                         </div>
                     </div>
                 </div>
-            
+                
 
 
             </section>
@@ -550,9 +559,10 @@
             <!-- No Results Message -->
             <div id="no-results" class="no-results" style="display: none;">
                 <div class="no-results-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.35-4.35"/>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
                     </svg>
                 </div>
                 <h3 class="no-results-title">No medications found</h3>
@@ -562,33 +572,20 @@
             <!-- Important Information -->
             <section class="important-info">
                 <h3 class="important-info-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
                     </svg>
                     Important Information
                 </h3>
                 <div class="important-info-content">
-                    <!--p class="important-info-item">
-                        <span class="bullet">•</span>
-                        <span><strong>PAP</strong> = Patient Assistance Program (typically free or $80/month for eligible patients)</span>
-                    </p>
-                    <p class="important-info-item">
-                        <span class="bullet">•</span>
-                        <span><strong>SubQ</strong> = Subcutaneous injection (under the skin)</span>
-                    </p>
-                    <p class="important-info-item">
-                        <span class="bullet">•</span>
-                        <span><strong>M3P</strong> = Medicare Prescription Payment Plan (payment plan option)</span>
-                    </p>
-                    <p class="important-info-item">
-                        <span class="bullet">•</span>
-                        <span><strong>*Tirzepatide</strong> is a dual GIP/GLP-1 receptor agonist, providing effects beyond traditional GLP-1 agonists</span>
-                    </p-->
                     <p class="important-info-item important-info-warning">
                         <span class="bullet">⚠️</span>
-                        <span>Savings programs are subject to change. Contact manufacturers directly for current eligibility requirements and benefits. Income limits apply to Patient Assistance Programs.</span>
+                        <span>Savings programs are subject to change. Contact manufacturers directly for current
+                            eligibility requirements and benefits. Income limits apply to Patient Assistance
+                            Programs.</span>
                     </p>
                 </div>
             </section>
@@ -597,11 +594,13 @@
         <!-- Footer -->
         <footer class="footer">
             <p class="footer-text">
-                This tool provides information about manufacturer savings programs. Always consult with your healthcare provider about medication options and affordability.
+                This tool provides information about manufacturer savings programs. Always consult with your healthcare
+                provider about medication options and affordability.
             </p>
         </footer>
     </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>
