@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"text/template"
 )
 
 const repoPath = "/Users/sam/git/samiam2013/pugnarehealth/"
@@ -18,10 +19,16 @@ func main() {
 	products, err := getCatalog(medCatalogPath)
 	if err != nil {
 		fmt.Println("Error getting catalog:", err)
-		return
+		os.Exit(1)
 	}
-	for _, p := range products {
-		fmt.Printf("Product: %#v\n", p)
+
+	// for _, p := range products {
+	// 	fmt.Printf("Product: %#v\n", p)
+	// }
+
+	if err = renderIndex(products); err != nil {
+		fmt.Println("Error rendering index:", err)
+		os.Exit(1)
 	}
 }
 
@@ -34,6 +41,7 @@ type product struct {
 	Savings        string `json:"savings,omitempty"`
 	Phone          string `json:"phone,omitempty"`
 	Link           string `json:"link,omitempty"`
+	ColorClass     string `json:"color_class,omitempty"`
 }
 
 func getCatalog(path string) ([]product, error) {
@@ -66,4 +74,40 @@ func getCatalog(path string) ([]product, error) {
 	}
 
 	return products, nil
+}
+
+func renderIndex(products []product) error {
+	// open the index.gohtml file, read its content
+	content, err := os.ReadFile(repoPath + "index.gohtml")
+	if err != nil {
+		return errors.Join(err, errors.New("reading index.gohtml"))
+	}
+	indexTemplate := string(content)
+
+	funcMap := template.FuncMap{
+		"hasPrefix": strings.HasPrefix,
+	}
+
+	t, err := template.New("index").Funcs(funcMap).Parse(indexTemplate)
+	if err != nil {
+		return errors.Join(err, errors.New("parsing index.gohtml template"))
+	}
+
+	data := struct {
+		Products []product
+	}{
+		Products: products,
+	}
+
+	outputFile, err := os.Create(repoPath + "public/index.html")
+	if err != nil {
+		return errors.Join(err, errors.New("creating index.html"))
+	}
+	defer outputFile.Close()
+
+	if err = t.Execute(outputFile, data); err != nil {
+		return errors.Join(err, errors.New("executing template for index.html"))
+	}
+
+	return nil
 }

@@ -11,6 +11,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+        <svg style="display:none;">
+            <symbol id="pill-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="8" y="4" width="8" height="16" rx="4"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+            </symbol>
+            <symbol id="external-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+            </symbol>
+            <symbol id="phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </symbol>
+            <symbol id="injection-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 2 4 4"/>
+                <path d="m17 7 3-3"/>
+                <path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/>
+                <path d="m9 11 4 4"/>
+                <path d="m5 19-3 3"/>
+                <path d="m14 4 6 6"/>
+            </symbol>
+        </svg>
+    </span>
     <!-- Animated background pattern -->
     <div class="background-pattern"></div>
 
@@ -39,7 +62,7 @@
                         <line x1="12" y1="16" x2="12" y2="12"/>
                         <line x1="12" y1="8" x2="12.01" y2="8"/>
                     </svg>
-                    <span id="drug-count">11 medications • Multiple savings options</span>
+                    <span id="drug-count">7 medications with savings options</span>
                 </div>
             </div>
         </header>
@@ -119,7 +142,409 @@
 
             <!-- Drug Cards Container -->
             <section id="drug-cards-container" class="drug-cards">
-                <!-- Cards will be dynamically inserted here -->
+              
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-indigo"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-indigo">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Mounjaro</h3>
+                                        <p class="drug-subtitle">Tirzepatide • GLP-1/GIP Dual Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Weekly</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($25/mo), Lilly Cares Patient Assistance Program</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://mounjaro.lilly.com/savings-resources" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-indigo">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:833-807-6576" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>833-807-6576</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-orange"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-orange">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Ozempic</h3>
+                                        <p class="drug-subtitle">Semaglutide • GLP-1 Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Weekly</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($25/mo), Patient Assistance Program (uninsured), Medicare Prescription Payment Plan</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://www.novocare.com/diabetes/products/ozempic/savings-offer.html" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-orange">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:1-866-310-7549" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>1-866-310-7549</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-amber"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-amber">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#pill-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Rybelsus</h3>
+                                        <p class="drug-subtitle">Semaglutide • GLP-1 Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Oral Tablet</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Daily</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($10/mo), Patient Assistance Program (free-$80/mo)</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-amber">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:1-833-275-2233" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>1-833-275-2233</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-emerald"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-emerald">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Trulicity</h3>
+                                        <p class="drug-subtitle">Dulaglutide • GLP-1 Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Weekly</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($25/mo, max $150), Lilly Cares Patient Assistance Program</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://trulicity.lilly.com/savings-resources" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-emerald">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:1-844-878-4636" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>1-844-878-4636</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-pink"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-pink">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Victoza</h3>
+                                        <p class="drug-subtitle">Liraglutide • GLP-1 Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Daily</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Patient Assistance Program, Discount programs available</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://www.novocare.com/diabetes/products/victoza.html" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-pink">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:1-866-310-7549" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>1-866-310-7549</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-cyan"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-cyan">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Wegovy</h3>
+                                        <p class="drug-subtitle">Semaglutide • GLP-1 Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Weekly</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($25/mo), Patient Assistance Program, Medicare Prescription Payment Plan</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-cyan">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:1-888-793-1218" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>1-888-793-1218</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                    <div class="drug-card-accent gradient-sky"></div>
+                    <div class="drug-card-content">
+                        <div class="drug-card-inner">
+                            <div class="drug-info">
+                                <div class="drug-header">
+                                    <div class="drug-icon gradient-sky">
+                                        <svg width="24" height="24">
+                                            
+                                                <use href="#injection-icon" />
+                                            
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="drug-name">Zepbound</h3>
+                                        <p class="drug-subtitle">Tirzepatide • GLP-1/GIP Dual Agonist</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-details">
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Administration</p>
+                                        <p class="drug-detail-value">Subcutaneous Injection</p>
+                                    </div>
+                                    <div class="drug-detail">
+                                        <p class="drug-detail-label">Dosing</p>
+                                        <p class="drug-detail-value">Once Weekly</p>
+                                    </div>
+                                </div>
+
+                                <div class="drug-savings">
+                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
+                                    <p class="drug-savings-programs">Savings Card ($25/mo), Lilly Cares Patient Assistance Program</p>
+                                </div>
+                            </div>
+
+                            <div class="drug-actions">
+                                <a href="https://zepbound.lilly.com/savings-resources" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="btn btn-primary gradient-sky">
+                                    <span>View Savings Programs</span>
+                                    <svg width="16" height="16">
+                                        <use href="#external-link-icon" />
+                                    </svg>
+                                </a>
+                                <a href="tel:833-807-6576" class="btn btn-secondary">
+                                    <svg width="16" height="16">
+                                        <use href="#phone-icon" />
+                                    </svg>
+                                    <span>833-807-6576</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+
             </section>
 
             <!-- No Results Message -->

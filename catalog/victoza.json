@@ -6,5 +6,6 @@
     "dose_frequency": "Once Daily",
     "savings": "Patient Assistance Program, Discount programs available",
     "phone": "1-866-310-7549",
-    "link": "https://www.novocare.com/diabetes/products/victoza.html"
+    "link": "https://www.novocare.com/diabetes/products/victoza.html",
+    "color_class": "gradient-pink"
 }

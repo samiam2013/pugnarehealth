@@ -6,5 +6,6 @@
         "dose_frequency": "Once Weekly",
         "savings": "Savings Card ($25/mo), Patient Assistance Program, Medicare Prescription Payment Plan",
         "phone": "1-888-793-1218",
-        "link": "https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html"
+        "link": "https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html",
+        "color_class": "gradient-cyan"
     }

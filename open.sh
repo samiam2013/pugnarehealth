@@ -12,6 +12,11 @@ if [ ! -d "/Applications/Firefox.app" ]; then
   exit 1
 fi
 
+go build /Users/sam/git/samiam2013/pugnarehealth
+
+./pugnarehealth || { echo "Build or execution failed"; exit 1; }
+
+
 echo "opening local index.html in Firefox"
 
 /Applications/Firefox.app/Contents/MacOS/firefox --new-tab "file:///Users/sam/git/samiam2013/pugnarehealth/public/index.html"

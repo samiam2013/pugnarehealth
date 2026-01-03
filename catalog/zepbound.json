@@ -6,5 +6,6 @@
     "dose_frequency": "Once Weekly",
     "savings": "Savings Card ($25/mo), Lilly Cares Patient Assistance Program",
     "phone": "833-807-6576",
-    "link": "https://zepbound.lilly.com/savings-resources"
+    "link": "https://zepbound.lilly.com/savings-resources", 
+    "color_class": "gradient-sky"
 }

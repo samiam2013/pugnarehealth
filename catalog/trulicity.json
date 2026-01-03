@@ -6,5 +6,6 @@
         "dose_frequency": "Once Weekly",
         "savings": "Savings Card ($25/mo, max $150), Lilly Cares Patient Assistance Program",
         "phone": "1-844-878-4636",
-        "link": "https://trulicity.lilly.com/savings-resources"
+        "link": "https://trulicity.lilly.com/savings-resources",
+        "color_class": "gradient-emerald"
     }

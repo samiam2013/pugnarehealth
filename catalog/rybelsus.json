@@ -6,5 +6,6 @@
     "dose_frequency": "Once Daily",
     "savings": "Savings Card ($10/mo), Patient Assistance Program (free-$80/mo)",
     "phone": "1-833-275-2233",
-    "link": "https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html"
+    "link": "https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html",
+    "color_class": "gradient-amber"
 }
