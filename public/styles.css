@@ -214,55 +214,6 @@ body {
     }
 }
 
-/* Search Section */
-.search-section {
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-    animation: slide-up 0.8s ease-out 0.3s forwards;
-    opacity: 0;
-}
-
-.search-wrapper {
-    position: relative;
-}
-
-.search-icon {
-    position: absolute;
-    left: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-slate-400);
-    transition: color 0.2s ease;
-}
-
-.search-wrapper:focus-within .search-icon {
-    color: var(--color-blue-500);
-}
-
-.search-input {
-    width: 100%;
-    padding: 1.25rem 1.5rem 1.25rem 1.5rem;
-    font-size: 1.125rem;
-    border-radius: 1rem;
-    border: 2px solid var(--color-slate-200);
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    outline: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 10px 15px -3px rgba(226, 232, 240, 0.5);
-    font-family: var(--font-sans);
-}
-
-.search-input:focus {
-    border-color: var(--color-blue-500);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 20px 25px -5px rgba(226, 232, 240, 0.7);
-}
-
-.search-input:hover {
-    box-shadow: 0 20px 25px -5px rgba(226, 232, 240, 0.7);
-}
-
 /* Info Cards */
 .info-cards {
     display: grid;
