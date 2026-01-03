@@ -9,7 +9,7 @@ import (
 	"text/template"
 )
 
-const repoPath = "/Users/sam/git/samiam2013/pugnarehealth/"
+const repoPath = "./"
 
 // relative to the root of the repo, not the current working directory
 const medCatalogPath = "catalog/"
