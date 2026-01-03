@@ -10,7 +10,8 @@
 
 # Test binary, built with `go test -c`
 *.test
-./pugnarehealth
+pugnarehealth
+
 
 # Code coverage profiles and other test artifacts
 *.out
