@@ -33,3 +33,5 @@ go.work.sum
 # .idea/
 .vscode/
 
+# Don't save the index file itself, it's going to be generated
+public/index.html
