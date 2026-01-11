@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -16,6 +17,10 @@ const repoPath = "./"
 const medCatalogPath = "catalog/"
 
 func main() {
+	var skipUpdateCheck bool
+	flag.BoolVar(&skipUpdateCheck, "skip-update-check", false, "Skip checking for FDA label updates using the OpenFDA API")
+	flag.Parse()
+
 	fmt.Println("starting pugnare.health...")
 	products, err := getCatalog(medCatalogPath)
 	if err != nil {
@@ -23,36 +28,38 @@ func main() {
 		os.Exit(1)
 	}
 
-	brandNames := []string{}
-	for _, p := range products {
-		if p.MedicineType == "Continuous Glucose Monitor" {
-			continue // skip CGMs for now
+	if !skipUpdateCheck {
+		brandNames := []string{}
+		for _, p := range products {
+			if p.MedicineType == "Continuous Glucose Monitor" {
+				continue // skip CGMs for now
+			}
+			brandNames = append(brandNames, p.BrandName)
 		}
-		brandNames = append(brandNames, p.BrandName)
-	}
 
-	recencyResults, err := fdaLabelRecencyLookup(brandNames)
-	if err != nil {
-		fmt.Println("Error looking up FDA label recency:", err)
-		os.Exit(1)
-	}
-
-	// print out the results
-	for i, p := range products {
-		recency, ok := recencyResults[p.BrandName]
-		if !ok {
-			fmt.Printf("No FDA label recency found for %s\n", p.BrandName)
-			continue
-		}
-		lastUpdated, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+		recencyResults, err := fdaLabelRecencyLookup(brandNames)
 		if err != nil {
-			fmt.Printf("Error parsing existing FDA label updated date for %s: %v\n", p.BrandName, err)
-			continue
+			fmt.Println("Error looking up FDA label recency:", err)
+			os.Exit(1)
 		}
-		if recency.After(lastUpdated) {
-			fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
-				p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
-			products[i].FDALabelNeedsUpdate = true
+
+		// print out the results
+		for i, p := range products {
+			recency, ok := recencyResults[p.BrandName]
+			if !ok {
+				fmt.Printf("No FDA label recency found for %s\n", p.BrandName)
+				continue
+			}
+			lastUpdated, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+			if err != nil {
+				fmt.Printf("Error parsing existing FDA label updated date for %s: %v\n", p.BrandName, err)
+				continue
+			}
+			if recency.After(lastUpdated) {
+				fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
+					p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
+				products[i].FDALabelNeedsUpdate = true
+			}
 		}
 	}
 

@@ -14,7 +14,7 @@ fi
 
 go build /Users/sam/git/samiam2013/pugnarehealth
 
-./pugnarehealth || { echo "Build or execution failed"; exit 1; }
+./pugnarehealth --skip-update-check || { echo "Build or execution failed"; exit 1; }
 
 
 echo "opening local index.html in Firefox"
