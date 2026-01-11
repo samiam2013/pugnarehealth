@@ -36,7 +36,7 @@ jobs:
         with:
           go-version: 'stable'
       - name: Run main.go
-        run: go run main.go
+        run: go run .
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
