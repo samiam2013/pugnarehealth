@@ -635,3 +635,14 @@ body {
 .gradient-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
 .gradient-cyan { background: linear-gradient(135deg, #06b6d4, #0891b2); }
 .gradient-sky { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+/* Additional Gradient Color Options */
+.gradient-red      { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+.gradient-yellow   { background: linear-gradient(135deg, #fde68a, #f59e0b); }
+.gradient-lime     { background: linear-gradient(135deg, #a3e635, #65a30d); }
+.gradient-fuchsia  { background: linear-gradient(135deg, #d946ef, #a21caf); }
+.gradient-gray     { background: linear-gradient(135deg, #e5e7eb, #6b7280); }
+.gradient-stone    { background: linear-gradient(135deg, #d6d3d1, #78716c); }
+.gradient-violet   { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.gradient-green    { background: linear-gradient(135deg, #22c55e, #15803d); }
+.gradient-rose     { background: linear-gradient(135deg, #f43f5e, #be123c); }
