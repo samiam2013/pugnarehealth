@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"strings"
 	"text/template"
+	"time"
+
+	"golang.org/x/time/rate"
 )
 
 const repoPath = "./"
@@ -22,9 +26,23 @@ func main() {
 		os.Exit(1)
 	}
 
-	// for _, p := range products {
-	// 	fmt.Printf("Product: %#v\n", p)
-	// }
+	l := rate.NewLimiter(rate.Every(2*time.Second), 1) // 1 request every 2 seconds
+	// for each product, look up FDA label recency
+	for _, p := range products {
+		if p.MedicineType == "Continuous Glucose Monitor" {
+			continue // skip CGMs for now
+		}
+		if err = l.Wait(context.Background()); err != nil {
+			fmt.Println("Error waiting for rate limiter:", err)
+			continue
+		}
+		latestDate, err := fdaLabelRecencyLookup(p.BrandName)
+		if err != nil {
+			fmt.Println("  Error looking up FDA label:", err)
+			continue
+		}
+		fmt.Println("  Most recent FDA label effective date for", p.BrandName, "is", latestDate.Format("2006-01-02"))
+	}
 
 	if err = renderIndex(products); err != nil {
 		fmt.Println("Error rendering index:", err)
@@ -49,7 +67,7 @@ func getCatalog(path string) ([]product, error) {
 	files := []string{}
 	entries, err := os.ReadDir(repoPath + medCatalogPath)
 	if err != nil {
-		return []product{}, errors.Join(err, errors.New("reading catalog directory"))
+		return []product{}, errors.Join(errors.New("failed reading catalog directory"), err)
 	}
 	for _, entry := range entries {
 		if !entry.IsDir() && len(entry.Name()) > 5 && strings.HasSuffix(strings.ToLower(entry.Name()), ".json") {
@@ -63,12 +81,12 @@ func getCatalog(path string) ([]product, error) {
 		// fmt.Printf("Processing file: %s\n", file)
 		content, err := os.ReadFile(repoPath + medCatalogPath + file)
 		if err != nil {
-			return []product{}, errors.Join(err, fmt.Errorf("reading file %s", file))
+			return []product{}, errors.Join(errors.New("failed reading file "+file), err)
 		}
 
 		var p product
 		if err = json.Unmarshal(content, &p); err != nil {
-			return []product{}, errors.Join(err, fmt.Errorf("parsing JSON in file %s", file))
+			return []product{}, errors.Join(errors.New("failed parsing JSON in file "+file), err)
 		}
 		products = append(products, p)
 	}
@@ -80,7 +98,7 @@ func renderIndex(products []product) error {
 	// open the index.gohtml file, read its content
 	content, err := os.ReadFile(repoPath + "index.gohtml")
 	if err != nil {
-		return errors.Join(err, errors.New("reading index.gohtml"))
+		return errors.Join(errors.New("failed reading index.gohtml"), err)
 	}
 	indexTemplate := string(content)
 
@@ -90,7 +108,7 @@ func renderIndex(products []product) error {
 
 	t, err := template.New("index").Funcs(funcMap).Parse(indexTemplate)
 	if err != nil {
-		return errors.Join(err, errors.New("parsing index.gohtml template"))
+		return errors.Join(errors.New("failed parsing index.gohtml template"), err)
 	}
 
 	data := struct {
@@ -101,12 +119,12 @@ func renderIndex(products []product) error {
 
 	outputFile, err := os.Create(repoPath + "public/index.html")
 	if err != nil {
-		return errors.Join(err, errors.New("creating index.html"))
+		return errors.Join(errors.New("failed creating index.html"), err)
 	}
 	defer outputFile.Close()
 
 	if err = t.Execute(outputFile, data); err != nil {
-		return errors.Join(err, errors.New("executing template for index.html"))
+		return errors.Join(errors.New("failed executing template for index.html"), err)
 	}
 
 	return nil
