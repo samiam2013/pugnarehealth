@@ -1,16 +1,12 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"strings"
 	"text/template"
-	"time"
-
-	"golang.org/x/time/rate"
 )
 
 const repoPath = "./"
@@ -26,22 +22,23 @@ func main() {
 		os.Exit(1)
 	}
 
-	l := rate.NewLimiter(rate.Every(2*time.Second), 1) // 1 request every 2 seconds
-	// for each product, look up FDA label recency
+	brandNames := []string{}
 	for _, p := range products {
 		if p.MedicineType == "Continuous Glucose Monitor" {
 			continue // skip CGMs for now
 		}
-		if err = l.Wait(context.Background()); err != nil {
-			fmt.Println("Error waiting for rate limiter:", err)
-			continue
-		}
-		latestDate, err := fdaLabelRecencyLookup(p.BrandName)
-		if err != nil {
-			fmt.Println("  Error looking up FDA label:", err)
-			continue
-		}
-		fmt.Println("  Most recent FDA label effective date for", p.BrandName, "is", latestDate.Format("2006-01-02"))
+		brandNames = append(brandNames, p.BrandName)
+	}
+
+	recencyResults, err := fdaLabelRecencyLookup(brandNames)
+	if err != nil {
+		fmt.Println("Error looking up FDA label recency:", err)
+		os.Exit(1)
+	}
+
+	// print out the results
+	for brand, effectiveDate := range recencyResults {
+		fmt.Printf("Brand: %s, Latest FDA Label Effective Date: %s\n", brand, effectiveDate.Format("2006-01-02"))
 	}
 
 	if err = renderIndex(products); err != nil {
@@ -59,6 +56,7 @@ type product struct {
 	Savings        string `json:"savings,omitempty"`
 	Phone          string `json:"phone,omitempty"`
 	Link           string `json:"link,omitempty"`
+	FdaLabelFile   string `json:"fda_label_file,omitempty"`
 	ColorClass     string `json:"color_class,omitempty"`
 }
 

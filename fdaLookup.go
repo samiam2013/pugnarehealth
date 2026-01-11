@@ -1,12 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"golang.org/x/time/rate"
 )
 
 type fdaLabelResult struct {
@@ -87,57 +90,66 @@ type fdaLabelData struct {
 }
 
 const fdaLabelAPIBase = "https://api.fda.gov/drug/label.json" // ?search=<brand_name>
+const rateLimitSeconds = 2
 
 // fdaLabelRecencyLookup looks up the most recent FDA label information for a given brand name.
 // if the label has been updated since lastChecked, it returns the new effective date.
-func fdaLabelRecencyLookup(brandName string) (time.Time, error) {
-	u, _ := url.Parse(fdaLabelAPIBase)
-	q := u.Query()
-	q.Set("search", brandName)
-	q.Set("limit", "30")
-	u.RawQuery = q.Encode()
+func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 
-	c := http.Client{}
-	req, _ := http.NewRequest("GET", u.String(), nil)
-	req.Header.Set("User-Agent", "pugnare.health/1.0")
-
-	//fmt.Println("Making FDA API request for brand name:", brandName, "URL:", u.String())
-	resp, err := c.Do(req)
-	if err != nil {
-		return time.Time{}, errors.Join(errors.New("error making FDA API request"), err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return time.Time{}, errors.New("FDA API returned non-200 status: " + resp.Status)
-	}
-	var fdaLabel fdaLabelData
-	if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
-		return time.Time{}, errors.Join(errors.New("failed to decode api json response"), err)
-	}
-
-	// if there's more than one result, return an error
-	lastChecked := time.Time{}
-	for _, result := range fdaLabel.Results {
-		dataElementsFirstWord := strings.Split(result.SplProductDataElements[0], " ")[0]
-		drugNameLower := strings.ToLower(dataElementsFirstWord)
-		brandNameLower := strings.ToLower(brandName)
-		if strings.Compare(drugNameLower, brandNameLower) != 0 {
-			// fmt.Println("Not a match: drugname ", drugNameLower, "vs brandname", brandNameLower)
-			continue
+	l := rate.NewLimiter(rate.Every(rateLimitSeconds*time.Second), 1)
+	results := make(map[string]time.Time)
+	for _, brandName := range brandNames {
+		if err := l.Wait(context.Background()); err != nil {
+			return nil, errors.Join(errors.New("error waiting for rate limiter"), err)
 		}
-		effectiveTime, err := time.Parse("20060102", result.EffectiveTime)
+		u, _ := url.Parse(fdaLabelAPIBase)
+		q := u.Query()
+		q.Set("search", brandName)
+		q.Set("limit", "30")
+		u.RawQuery = q.Encode()
+
+		c := http.Client{}
+		req, _ := http.NewRequest("GET", u.String(), nil)
+		req.Header.Set("User-Agent", "pugnare.health/1.0")
+
+		//fmt.Println("Making FDA API request for brand name:", brandName, "URL:", u.String())
+		resp, err := c.Do(req)
 		if err != nil {
-			continue
+			return nil, errors.Join(errors.New("error making FDA API request"), err)
 		}
-		if effectiveTime.After(lastChecked) {
-			lastChecked = effectiveTime
-		}
-	}
-	if lastChecked.IsZero() {
-		return time.Time{}, errors.New("no brand-matching FDA label found for brand name: " +
-			brandName + " URL: " + u.String())
-	}
+		defer resp.Body.Close()
 
-	return lastChecked, nil
+		if resp.StatusCode != http.StatusOK {
+			return nil, errors.New("FDA API returned non-200 status: " + resp.Status)
+		}
+		var fdaLabel fdaLabelData
+		if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
+			return nil, errors.Join(errors.New("failed to decode api json response"), err)
+		}
+
+		// if there's more than one result, return an error
+		lastChecked := time.Time{}
+		for _, result := range fdaLabel.Results {
+			dataElementsFirstWord := strings.Split(result.SplProductDataElements[0], " ")[0]
+			drugNameLower := strings.ToLower(dataElementsFirstWord)
+			brandNameLower := strings.ToLower(brandName)
+			if strings.Compare(drugNameLower, brandNameLower) != 0 {
+				// fmt.Println("Not a match: drugname ", drugNameLower, "vs brandname", brandNameLower)
+				continue
+			}
+			effectiveTime, err := time.Parse("20060102", result.EffectiveTime)
+			if err != nil {
+				continue
+			}
+			if effectiveTime.After(lastChecked) {
+				lastChecked = effectiveTime
+			}
+		}
+		if lastChecked.IsZero() {
+			return nil, errors.New("no brand-matching FDA label found for brand name: " +
+				brandName + " URL: " + u.String())
+		}
+		results[brandName] = lastChecked
+	}
+	return results, nil
 }
