@@ -7,5 +7,7 @@
     "savings": "Programs available to assist both insured and uninsured patients",
     "phone": "1-866-228-3546",
     "link": "https://www.invokana.com/savings-and-cost-support/",
-    "color_class": "gradient-pink"
+    "color_class": "gradient-pink",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/204042s043lbl.pdf",
+    "fda_label_file_updated": "2026-01-11"
 }

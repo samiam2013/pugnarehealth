@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"text/template"
+	"time"
 )
 
 const repoPath = "./"
@@ -37,8 +38,22 @@ func main() {
 	}
 
 	// print out the results
-	for brand, effectiveDate := range recencyResults {
-		fmt.Printf("Brand: %s, Latest FDA Label Effective Date: %s\n", brand, effectiveDate.Format("2006-01-02"))
+	for i, p := range products {
+		recency, ok := recencyResults[p.BrandName]
+		if !ok {
+			fmt.Printf("No FDA label recency found for %s\n", p.BrandName)
+			continue
+		}
+		lastUpdated, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+		if err != nil {
+			fmt.Printf("Error parsing existing FDA label updated date for %s: %v\n", p.BrandName, err)
+			continue
+		}
+		if recency.After(lastUpdated) {
+			fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
+				p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
+			products[i].FDALabelNeedsUpdate = true
+		}
 	}
 
 	if err = renderIndex(products); err != nil {
@@ -48,16 +63,18 @@ func main() {
 }
 
 type product struct {
-	IngredientName string `json:"ingredient_name"`
-	BrandName      string `json:"brand_name,omitempty"`
-	MedicineType   string `json:"medicine_type,omitempty"`
-	AdminRoute     string `json:"administration_route,omitempty"`
-	DoseFrequency  string `json:"dose_frequency,omitempty"`
-	Savings        string `json:"savings,omitempty"`
-	Phone          string `json:"phone,omitempty"`
-	Link           string `json:"link,omitempty"`
-	FdaLabelFile   string `json:"fda_label_file,omitempty"`
-	ColorClass     string `json:"color_class,omitempty"`
+	IngredientName      string `json:"ingredient_name"`
+	BrandName           string `json:"brand_name,omitempty"`
+	MedicineType        string `json:"medicine_type,omitempty"`
+	AdminRoute          string `json:"administration_route,omitempty"`
+	DoseFrequency       string `json:"dose_frequency,omitempty"`
+	Savings             string `json:"savings,omitempty"`
+	Phone               string `json:"phone,omitempty"`
+	Link                string `json:"link,omitempty"`
+	FDALabelFile        string `json:"fda_label_file,omitempty"`
+	FDALabelUpdated     string `json:"fda_label_file_updated,omitempty"` // YYYY-MM-DD
+	FDALabelNeedsUpdate bool   `json:"fda_label_needs_update,omitempty"`
+	ColorClass          string `json:"color_class,omitempty"`
 }
 
 func getCatalog(path string) ([]product, error) {

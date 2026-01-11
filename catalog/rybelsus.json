@@ -7,5 +7,7 @@
     "savings": "Savings Card ($10/mo), Patient Assistance Program (free-$80/mo)",
     "phone": "1-833-275-2233",
     "link": "https://www.novocare.com/diabetes/products/rybelsus/savings-offer.html",
-    "color_class": "gradient-amber"
+    "color_class": "gradient-amber",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/213182s000,213051s001lbl.pdf",
+    "fda_label_file_updated": "2026-01-11"
 }

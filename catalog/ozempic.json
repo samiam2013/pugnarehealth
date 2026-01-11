@@ -7,5 +7,7 @@
     "savings": "Savings Card ($25/mo), Patient Assistance Program (uninsured), Medicare Prescription Payment Plan",
     "phone": "1-866-310-7549",
     "link": "https://www.novocare.com/diabetes/products/ozempic/savings-offer.html",
-    "color_class": "gradient-orange"
+    "color_class": "gradient-orange",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/209637s035,209637s037lbl.pdf",
+    "fda_label_file_updated": "2026-01-11"
 }

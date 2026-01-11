@@ -7,5 +7,7 @@
     "savings": "Pay as little as $10 a month for a 1 to 3-month prescription if eligible",
     "phone": "1-866-279-8990",
     "link": "https://patient.boehringer-ingelheim.com/us/products/jardiance/type-2-diabetes/savings",
-    "color_class": "gradient-teal"
+    "color_class": "gradient-teal",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+    "fda_label_file_updated": "2026-01-11"
 }
