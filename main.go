@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 	"text/template"
 	"time"
@@ -15,6 +16,20 @@ const repoPath = "./"
 
 // relative to the root of the repo, not the current working directory
 const medCatalogPath = "catalog/"
+
+var medTypes = map[string]struct{}{
+	"Continuous Glucose Monitor": {},
+	"SGLT-2 Inhibitor":           {},
+	"GLP-1 Agonist":              {},
+	"DPP-4 Inhibitor":            {},
+	"GLP-1/GIP Dual Agonist":     {},
+}
+
+var adminRoutes = map[string]struct{}{
+	"Oral Tablet":            {},
+	"Subcutaneous Injection": {},
+	"Automatic Applicator":   {},
+}
 
 func main() {
 	var skipUpdateCheck bool
@@ -61,6 +76,66 @@ func main() {
 				products[i].FDALabelNeedsUpdate = true
 			}
 		}
+	}
+
+	phoneRe := regexp.MustCompile(`^1-\d{3}-\d{3}-\d{4}$`)
+	// validate the products
+	for _, p := range products {
+		// Check that the unconstrained fields are not empty
+		if strings.TrimSpace(p.BrandName) == "" {
+			fmt.Printf("Failed: Brand name is empty for ingredient '%s'\n", p.IngredientName)
+			os.Exit(1)
+		}
+		if strings.TrimSpace(p.IngredientName) == "" {
+			fmt.Printf("Failed: Ingredient name is empty for brand '%s'\n", p.BrandName)
+			os.Exit(1)
+		}
+		if strings.TrimSpace(p.DoseFrequency) == "" {
+			fmt.Printf("Failed: Dose frequency is empty for product '%s'\n", p.BrandName)
+			os.Exit(1)
+		}
+		if strings.TrimSpace(p.Savings) == "" {
+			fmt.Printf("Failed: Savings info is empty for product '%s'\n", p.BrandName)
+			os.Exit(1)
+		}
+
+		// check the medicine type is one in the list
+		if _, ok := medTypes[p.MedicineType]; !ok {
+			fmt.Printf("Failed: Medicine type '%s' for product '%s' is not in the recognized list\n", p.MedicineType, p.BrandName)
+			fmt.Printf("Recognized medicine types are:\n")
+			for k := range medTypes {
+				fmt.Printf(" - %s\n", k)
+			}
+			os.Exit(1)
+		}
+
+		// check the administration route is one in the list
+		if _, ok := adminRoutes[p.AdminRoute]; !ok {
+			fmt.Printf("Failed: Administration route '%s' for product '%s' is not in the recognized list\n", p.AdminRoute, p.BrandName)
+			fmt.Printf("Recognized administration routes are:\n")
+			for k := range adminRoutes {
+				fmt.Printf(" - %s\n", k)
+			}
+			os.Exit(1)
+		}
+
+		// make sure the phone number is matches 1-800-555-5555 format if not empty
+		if strings.TrimSpace(p.Phone) != "" {
+			if !phoneRe.MatchString(p.Phone) {
+				fmt.Printf("Failed: Phone number '%s' for product '%s' is not in the format 1-800-555-5555\n", p.Phone, p.BrandName)
+				os.Exit(1)
+			}
+		}
+
+		// make sure the link is a valid URL if not empty
+		if strings.TrimSpace(p.Link) != "" {
+			if !strings.HasPrefix(p.Link, "http://") && !strings.HasPrefix(p.Link, "https://") {
+				fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", p.Link, p.BrandName)
+				os.Exit(1)
+			}
+		}
+
+		// TODO: check/generate css colors/classes from one source?
 	}
 
 	if err = renderIndex(products); err != nil {
