@@ -6,7 +6,8 @@ https://pugnare.health
 
 https://pugnarehealth.org
 
-Project to help people get the medical supplies and medicine
+Project to help people get the medical supplies and medicine needed for
+diseases on the metabolic health spectrum, Diabetes, Obesity, ASCVD, etc.
 
 Goal is for this to be helpful to those who need these very expensive medicines,
 as I have become one of them. This is nothing special, just a centralizing resource
