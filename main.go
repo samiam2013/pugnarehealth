@@ -47,8 +47,8 @@ func main() {
 	if !skipUpdateCheck {
 		brandNames := []string{}
 		for _, p := range products {
-			if p.MedicineType == "Continuous Glucose Monitor" {
-				continue // skip CGMs for now
+			if p.AdminRoute == "Automatic Applicator" {
+				continue // skip CGMs, pumps, etc without FDA labels
 			}
 			brandNames = append(brandNames, p.BrandName)
 		}
