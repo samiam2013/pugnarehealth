@@ -142,7 +142,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 			dataElementsFirstWord := strings.Split(result.SplProductDataElements[0], " ")[0]
 			drugNameLower := strings.ToLower(dataElementsFirstWord)
 			brandNameLower := strings.ToLower(brandName)
-			if strings.Compare(drugNameLower, brandNameLower) != 0 {
+			if drugNameLower != brandNameLower {
 				// fmt.Println("Not a match: drugname ", drugNameLower, "vs brandname", brandNameLower)
 				continue
 			}
