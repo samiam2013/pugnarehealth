@@ -141,7 +141,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 			}
 			effectiveTime, err := time.Parse("20060102", result.EffectiveTime)
 			if err != nil {
-				continue
+				return nil, errors.Join(errors.New("error parsing effective time from FDA label"), err)
 			}
 			if effectiveTime.After(lastChecked) {
 				lastChecked = effectiveTime
