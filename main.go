@@ -19,6 +19,7 @@ const medCatalogPath = "catalog/"
 
 var medTypes = map[string]struct{}{
 	"Continuous Glucose Monitor": {},
+	"Manual Insulin Pump":        {},
 	"SGLT-2 Inhibitor":           {},
 	"GLP-1 Agonist":              {},
 	"DPP-4 Inhibitor":            {},
