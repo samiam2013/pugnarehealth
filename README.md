@@ -6,12 +6,9 @@ https://pugnare.health
 
 https://pugnarehealth.org
 
-Project to help people get the medical supplies and medicine needed for
-diseases on the metabolic health spectrum, Diabetes, Obesity, ASCVD, etc.
-
-Goal is for this to be helpful to those who need these very expensive medicines,
-as I have become one of them. This is nothing special, just a centralizing resource
-to save people time researching or comparing price-savings among options.
+Project to help people get the available savings on medical supplies and 
+medicine needed for diseases on the metabolic health spectrum like diabetes, 
+oesity, ASCVD (athero-sclerotic cardio-vascular disease), etc.
 
 It's structured as a bunch of JSON data and a github action that re-deploys
 the page daily after checking the FDA labels don't have updates (marking them as
