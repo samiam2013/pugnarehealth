@@ -5,10 +5,10 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"html/template"
 	"os"
 	"regexp"
 	"strings"
-	"text/template"
 	"time"
 )
 
