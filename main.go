@@ -168,7 +168,7 @@ func getCatalog(path string) ([]product, error) {
 		return []product{}, errors.Join(errors.New("failed reading catalog directory"), err)
 	}
 	for _, entry := range entries {
-		if !entry.IsDir() && len(entry.Name()) > 5 && strings.HasSuffix(strings.ToLower(entry.Name()), ".json") {
+		if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".json") {
 			files = append(files, entry.Name())
 		}
 	}
