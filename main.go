@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"net/url"
 	"os"
 	"regexp"
 	"strings"
@@ -134,6 +135,38 @@ func main() {
 				fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", p.Link, p.BrandName)
 				os.Exit(1)
 			}
+		}
+
+		// if there is an fda label link
+		if strings.TrimSpace(p.FDALabelFile) != "" {
+			// make sure the updated date is in YYYY-MM-DD format
+			updateTime, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+			if err != nil {
+				fmt.Printf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format\n", p.FDALabelUpdated, p.BrandName)
+				os.Exit(1)
+			}
+			// it's impossible to have updated the label in the future
+			if updateTime.After(time.Now()) {
+				fmt.Printf("Failed: FDA label updated date '%s' for product '%s' is in the future\n", p.FDALabelUpdated, p.BrandName)
+				os.Exit(1)
+			}
+			// make sure the link is to FDA's label repository
+			if !strings.HasPrefix(p.FDALabelFile, "https://www.accessdata.fda.gov/drugsatfda_docs/label/") {
+				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a valid FDA label repository URL\n", p.FDALabelFile, p.BrandName)
+				os.Exit(1)
+			}
+			// make sure the link is valid (parses as a URL)
+			u, err := url.ParseRequestURI(p.FDALabelFile)
+			if err != nil {
+				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a valid URL\n", p.FDALabelFile, p.BrandName)
+				os.Exit(1)
+			}
+			// it has to be a link to a PDF
+			if !strings.HasSuffix(strings.ToLower(u.Path), ".pdf") {
+				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a link to a PDF file\n", p.FDALabelFile, p.BrandName)
+				os.Exit(1)
+			}
+			// TODO send a HEAD request to make sure the link is reachable?
 		}
 
 		// TODO: check/generate css colors/classes from one source?
