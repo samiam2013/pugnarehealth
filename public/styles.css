@@ -113,6 +113,12 @@ body {
     margin-top: 0.125rem;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
 .header-badge {
     display: none;
     align-items: center;
@@ -646,3 +652,191 @@ body {
 .gradient-violet   { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 .gradient-green    { background: linear-gradient(135deg, #22c55e, #15803d); }
 .gradient-rose     { background: linear-gradient(135deg, #f43f5e, #be123c); }
+
+/* Dark Mode Toggle */
+.theme-toggle {
+    background: var(--color-slate-100);
+    border: 1px solid var(--color-slate-200);
+    border-radius: 9999px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: var(--color-slate-600);
+}
+
+.theme-toggle:hover {
+    background: var(--color-slate-200);
+    transform: scale(1.05);
+}
+
+.theme-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+    transform: rotate(15deg);
+}
+
+.theme-toggle .icon-sun {
+    display: none;
+}
+
+.theme-toggle .icon-moon {
+    display: block;
+}
+
+/* Tertiary button style */
+.btn-tertiary {
+    background: transparent;
+    color: var(--color-slate-500);
+    border: 1px solid var(--color-slate-200);
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-tertiary:hover {
+    background: var(--color-slate-50);
+    color: var(--color-slate-700);
+    border-color: var(--color-slate-300);
+}
+
+/* Dark Mode Styles */
+[data-theme="dark"] {
+    --color-slate-50: #0f172a;
+    --color-slate-100: #1e293b;
+    --color-slate-200: #334155;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #94a3b8;
+    --color-slate-600: #cbd5e1;
+    --color-slate-700: #e2e8f0;
+    --color-slate-800: #f1f5f9;
+    --color-blue-50: #1e293b;
+    --color-blue-100: #1e3a5f;
+    --color-blue-200: #1e40af;
+    --color-green-50: #14532d;
+    --color-green-200: #166534;
+    --color-green-700: #86efac;
+    --color-emerald-50: #14532d;
+}
+
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+[data-theme="dark"] .background-pattern {
+    opacity: 0.03;
+}
+
+[data-theme="dark"] .header {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom-color: rgba(51, 65, 85, 0.5);
+}
+
+[data-theme="dark"] .info-card {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: var(--color-slate-200);
+}
+
+[data-theme="dark"] .drug-card {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: var(--color-slate-200);
+}
+
+[data-theme="dark"] .drug-detail {
+    background: rgba(15, 23, 42, 0.6);
+}
+
+[data-theme="dark"] .drug-savings {
+    background: linear-gradient(135deg, rgba(20, 83, 45, 0.4), rgba(20, 83, 45, 0.3));
+    border-color: #166534;
+}
+
+[data-theme="dark"] .drug-savings-label {
+    color: #86efac;
+}
+
+[data-theme="dark"] .btn-secondary {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--color-slate-700);
+    border-color: var(--color-slate-200);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: rgba(51, 65, 85, 0.8);
+    border-color: var(--color-slate-400);
+}
+
+[data-theme="dark"] .btn-tertiary {
+    color: var(--color-slate-500);
+    border-color: var(--color-slate-200);
+}
+
+[data-theme="dark"] .btn-tertiary:hover {
+    background: rgba(51, 65, 85, 0.5);
+    color: var(--color-slate-700);
+}
+
+[data-theme="dark"] .important-info {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.5), rgba(49, 46, 129, 0.3));
+    border-color: #3b82f6;
+}
+
+[data-theme="dark"] .important-info-title svg {
+    color: #60a5fa;
+}
+
+[data-theme="dark"] .important-info-item .bullet {
+    color: #60a5fa;
+}
+
+[data-theme="dark"] .important-info-warning {
+    border-top-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .footer {
+    background: rgba(15, 23, 42, 0.8);
+    border-top-color: var(--color-slate-200);
+}
+
+[data-theme="dark"] .no-results-icon {
+    background: var(--color-slate-100);
+    color: var(--color-slate-400);
+}
+
+[data-theme="dark"] .theme-toggle {
+    background: var(--color-slate-100);
+    border-color: var(--color-slate-200);
+    color: var(--color-slate-600);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background: var(--color-slate-200);
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+    display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+    display: none;
+}
+
+[data-theme="dark"] .header-badge {
+    background: rgba(30, 58, 95, 0.5);
+    border-color: #3b82f6;
+}
+
+/* Smooth theme transition */
+html {
+    color-scheme: light dark;
+}
+
+html, body, .header, .info-card, .drug-card, .btn-secondary, .btn-tertiary,
+.important-info, .footer, .theme-toggle, .drug-detail, .drug-savings {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
