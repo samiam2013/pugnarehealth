@@ -254,11 +254,34 @@
                                         {{if .Eligibility.CashPay}}<span class="eligibility-tag tag-cash">Cash Pay</span>{{end}}
                                     </div>
                                     {{end}}
+                                    {{if .Eligibility.OtherCriteria}}
+                                    <div class="eligibility-criteria">
+                                        <ul class="criteria-list">
+                                            {{range $i, $c := .Eligibility.OtherCriteria}}
+                                            {{if lt $i 3}}
+                                            <li title="{{$c}}">{{truncate $c 60}}</li>
+                                            {{end}}
+                                            {{end}}
+                                        </ul>
+                                        {{if gt (len .Eligibility.OtherCriteria) 3}}
+                                        <details class="criteria-more">
+                                            <summary>+{{subtract (len .Eligibility.OtherCriteria) 3}} more criteria</summary>
+                                            <ul class="criteria-list">
+                                                {{range $i, $c := .Eligibility.OtherCriteria}}
+                                                {{if ge $i 3}}
+                                                <li>{{$c}}</li>
+                                                {{end}}
+                                                {{end}}
+                                            </ul>
+                                        </details>
+                                        {{end}}
+                                    </div>
+                                    {{end}}
                                     <div class="savings-program-actions">
                                         {{if .Link}}
                                         <a href="{{.Link}}" target="_blank" rel="noopener noreferrer"
                                             class="btn btn-primary {{$colorClass}}">
-                                            <span>View Savings Program</span>
+                                            <span>Link to {{.Type}}</span>
                                             <svg width="16" height="16">
                                                 <use href="#external-link-icon" />
                                             </svg>

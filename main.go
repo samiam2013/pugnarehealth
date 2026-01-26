@@ -215,9 +215,10 @@ type savingsInfo struct {
 	Phone       string `json:"phone,omitempty"`
 	Link        string `json:"link,omitempty"`
 	Eligibility struct {
-		PrivateInsurance    bool `json:"private_insurance,omitempty"`
-		GovernmentInsurance bool `json:"government_insurance,omitempty"`
-		CashPay             bool `json:"cash_pay,omitempty"`
+		PrivateInsurance    bool     `json:"private_insurance,omitempty"`
+		GovernmentInsurance bool     `json:"government_insurance,omitempty"`
+		CashPay             bool     `json:"cash_pay,omitempty"`
+		OtherCriteria       []string `json:"other_criteria,omitempty"`
 	} `json:"eligibility,omitempty"`
 }
 
@@ -263,6 +264,15 @@ func renderIndex(products []product) error {
 
 	funcMap := template.FuncMap{
 		"hasPrefix": strings.HasPrefix,
+		"truncate": func(s string, n int) string {
+			if len(s) <= n {
+				return s
+			}
+			return s[:n] + "..."
+		},
+		"subtract": func(a, b int) int {
+			return a - b
+		},
 	}
 
 	t, err := template.New("index").Funcs(funcMap).Parse(indexTemplate)

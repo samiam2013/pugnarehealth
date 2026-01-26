@@ -403,6 +403,65 @@ body {
     border: 1px solid var(--color-green-200);
 }
 
+.eligibility-criteria {
+    margin-top: 0.5rem;
+}
+
+.criteria-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+}
+
+.criteria-list li {
+    padding: 0.125rem 0;
+    padding-left: 1rem;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.criteria-list li::before {
+    content: "\2022";
+    position: absolute;
+    left: 0.25rem;
+    color: var(--color-gray-400);
+}
+
+.criteria-more {
+    margin-top: 0.25rem;
+}
+
+.criteria-more summary {
+    font-size: 0.75rem;
+    color: var(--color-blue-600);
+    cursor: pointer;
+    padding: 0.125rem 0;
+    list-style: none;
+    user-select: none;
+}
+
+.criteria-more summary::-webkit-details-marker {
+    display: none;
+}
+
+.criteria-more summary:hover {
+    text-decoration: underline;
+}
+
+.criteria-more[open] summary {
+    margin-bottom: 0.125rem;
+}
+
+.criteria-more .criteria-list li {
+    white-space: normal;
+}
+
 .savings-program-actions {
     display: flex;
     flex-wrap: wrap;
@@ -901,6 +960,18 @@ body {
     background: rgba(20, 83, 45, 0.4);
     color: #86efac;
     border-color: #166534;
+}
+
+[data-theme="dark"] .criteria-list {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .criteria-list li::before {
+    color: #6b7280;
+}
+
+[data-theme="dark"] .criteria-more summary {
+    color: #93c5fd;
 }
 
 [data-theme="dark"] .savings-program + .savings-program {
