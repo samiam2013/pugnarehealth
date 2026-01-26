@@ -8,13 +8,31 @@
     "savings": [
         {
             "type": "Copay Discount Card",
-            "description": "Savings Card ($25/mo, max $150), Lilly Cares Patient Assistance Program",
+            "description": "Pay as little as $25 for a 1, 2 or 3-month supply",
             "phone": "1-844-878-4636",
             "link": "https://trulicity.lilly.com/savings-resources",
             "eligibility": {
                 "private_insurance": true,
                 "government_insurance": false,
                 "cash_pay": false
+            }
+        },
+        {
+            "type": "Patient Assistance Program",
+            "description": "Lilly Cares Patient Assistance Program for eligible patients",
+            "phone": "1-800-545-6962",
+            "link": "https://www.lillycares.com/",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true,
+                "other_criteria": [
+                    "prescription necessary",
+                    "us residency",
+                    "income 300% Federal Poverty Level or below",
+                    "requires application",
+                    "more criteria details online https://www.lillycares.com/assets/pdf/lilly_cares_application.pdf"
+                ]
             }
         }
     ],
