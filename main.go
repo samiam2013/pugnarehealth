@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 )
@@ -190,6 +191,24 @@ func main() {
 		// TODO: check/generate css colors/classes from one source?
 	}
 
+	// sort the products by ListPosition
+	// products with ListPosition 0 (not set) go to the end
+	sortedProducts := []product{}
+	unsortedProducts := []product{}
+	for _, p := range products {
+		if p.ListPosition > 0 {
+			sortedProducts = append(sortedProducts, p)
+		} else {
+			unsortedProducts = append(unsortedProducts, p)
+		}
+	}
+	// sort the sortedProducts slice
+	sp := byListPosition(sortedProducts)
+	sort.Sort(sp)
+	// append the unsorted products to the end
+	sortedProducts = append(sp, unsortedProducts...)
+	products = sortedProducts
+
 	if err = renderIndex(products); err != nil {
 		fmt.Println("Error rendering index:", err)
 		os.Exit(1)
@@ -207,7 +226,15 @@ type product struct {
 	FDALabelUpdated     string        `json:"fda_label_file_updated,omitempty"` // YYYY-MM-DD
 	FDALabelNeedsUpdate bool          `json:"fda_label_needs_update,omitempty"`
 	ColorClass          string        `json:"color_class,omitempty"`
+	ListPosition        int           `json:"list_position,omitempty"`
 }
+
+// make the sort functions for products based on ListPosition
+type byListPosition []product
+
+func (a byListPosition) Len() int           { return len(a) }
+func (a byListPosition) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a byListPosition) Less(i, j int) bool { return a[i].ListPosition < a[j].ListPosition }
 
 type savingsInfo struct {
 	Type        string `json:"type"`
