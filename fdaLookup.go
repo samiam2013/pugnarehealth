@@ -96,8 +96,8 @@ const rateLimitSeconds = 2
 // fdaLabelRecencyLookup looks up the most recent FDA label information for a given brand name.
 // if the label has been updated since lastChecked, it returns the new effective date.
 func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
-	fmt.Println("Starting FDA label recency lookup for", len(brandNames), "brand names...")
-	fmt.Printf("this will take %d seconds due to rate limiting...", rateLimitSeconds*len(brandNames))
+	fmt.Println("starting FDA label recency lookup for", len(brandNames), "brand names")
+	fmt.Printf("network will take %d sec for rate limiting.\n", rateLimitSeconds*len(brandNames))
 	l := rate.NewLimiter(rate.Every(rateLimitSeconds*time.Second), 1)
 	results := make(map[string]time.Time)
 	for _, brandName := range brandNames {
