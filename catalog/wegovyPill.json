@@ -1,0 +1,24 @@
+{
+    "list_position": 6,
+    "ingredient_name": "Semaglutide",
+    "brand_name": "Wegovy Pill",
+    "medicine_type": "GLP-1 Agonist",
+    "administration_route": "Oral Tablet",
+    "dose_frequency": "Once Daily",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $25 a month with commercial insurance or starting at $149 a month self-pay",
+            "phone": "1-888-793-1218",
+            "link": "https://www.novocare.com/patient/medicines/wegovy/savings-offer.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true
+            }
+        }
+    ],
+    "color_class": "gradient-pink",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/218316Orig1s000lbl.pdf",
+    "fda_label_file_updated": "2026-01-26"
+}
