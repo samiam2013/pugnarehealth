@@ -33,12 +33,18 @@ var adminRoutes = map[string]struct{}{
 	"Automatic Applicator":   {},
 }
 
+var savingsTypes = map[string]struct{}{
+	"Copay Discount Card":                {},
+	"Patient Assistance Program":         {},
+	"Medicare Prescription Payment Plan": {},
+}
+
 func main() {
 	var skipUpdateCheck bool
 	flag.BoolVar(&skipUpdateCheck, "skip-update-check", false, "Skip checking for FDA label updates using the OpenFDA API")
 	flag.Parse()
 
-	fmt.Println("starting pugnare.health...")
+	fmt.Println("starting webserver for pugnare.health")
 	products, err := getCatalog(medCatalogPath)
 	if err != nil {
 		fmt.Println("Error getting catalog:", err)
@@ -96,8 +102,8 @@ func main() {
 			fmt.Printf("Failed: Dose frequency is empty for product '%s'\n", p.BrandName)
 			os.Exit(1)
 		}
-		if strings.TrimSpace(p.Savings) == "" {
-			fmt.Printf("Failed: Savings info is empty for product '%s'\n", p.BrandName)
+		if len(p.Savings) == 0 {
+			fmt.Printf("Failed: Savings information is empty for product '%s'\n", p.BrandName)
 			os.Exit(1)
 		}
 
@@ -121,18 +127,30 @@ func main() {
 			os.Exit(1)
 		}
 
-		// make sure the phone number is matches 1-800-555-5555 format if not empty
-		if strings.TrimSpace(p.Phone) != "" {
-			if !phoneRe.MatchString(p.Phone) {
-				fmt.Printf("Failed: Phone number '%s' for product '%s' is not in the format 1-800-555-5555\n", p.Phone, p.BrandName)
+		// validate each savings program's phone and link
+		for _, sp := range p.Savings {
+			if strings.TrimSpace(sp.Description) == "" {
+				fmt.Printf("Failed: Savings program description is empty for product '%s'\n", p.BrandName)
 				os.Exit(1)
 			}
-		}
-
-		// make sure the link is a valid URL if not empty
-		if strings.TrimSpace(p.Link) != "" {
-			if !strings.HasPrefix(p.Link, "http://") && !strings.HasPrefix(p.Link, "https://") {
-				fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", p.Link, p.BrandName)
+			if strings.TrimSpace(sp.Phone) != "" {
+				if !phoneRe.MatchString(sp.Phone) {
+					fmt.Printf("Failed: Phone number '%s' for product '%s' is not in the format 1-800-555-5555\n", sp.Phone, p.BrandName)
+					os.Exit(1)
+				}
+			}
+			if strings.TrimSpace(sp.Link) != "" {
+				if !strings.HasPrefix(sp.Link, "http://") && !strings.HasPrefix(sp.Link, "https://") {
+					fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", sp.Link, p.BrandName)
+					os.Exit(1)
+				}
+			}
+			if _, ok := savingsTypes[sp.Type]; !ok {
+				fmt.Printf("Failed: Savings program type '%s' for product '%s' is not in the recognized list\n", sp.Type, p.BrandName)
+				fmt.Printf("Recognized savings program types are:\n")
+				for k := range savingsTypes {
+					fmt.Printf(" - %s\n", k)
+				}
 				os.Exit(1)
 			}
 		}
@@ -179,18 +197,28 @@ func main() {
 }
 
 type product struct {
-	IngredientName      string `json:"ingredient_name"`
-	BrandName           string `json:"brand_name,omitempty"`
-	MedicineType        string `json:"medicine_type,omitempty"`
-	AdminRoute          string `json:"administration_route,omitempty"`
-	DoseFrequency       string `json:"dose_frequency,omitempty"`
-	Savings             string `json:"savings,omitempty"`
-	Phone               string `json:"phone,omitempty"`
-	Link                string `json:"link,omitempty"`
-	FDALabelFile        string `json:"fda_label_file,omitempty"`
-	FDALabelUpdated     string `json:"fda_label_file_updated,omitempty"` // YYYY-MM-DD
-	FDALabelNeedsUpdate bool   `json:"fda_label_needs_update,omitempty"`
-	ColorClass          string `json:"color_class,omitempty"`
+	IngredientName      string        `json:"ingredient_name"`
+	BrandName           string        `json:"brand_name"`
+	MedicineType        string        `json:"medicine_type"`
+	AdminRoute          string        `json:"administration_route"`
+	DoseFrequency       string        `json:"dose_frequency,omitempty"`
+	Savings             []savingsInfo `json:"savings"`
+	FDALabelFile        string        `json:"fda_label_file,omitempty"`
+	FDALabelUpdated     string        `json:"fda_label_file_updated,omitempty"` // YYYY-MM-DD
+	FDALabelNeedsUpdate bool          `json:"fda_label_needs_update,omitempty"`
+	ColorClass          string        `json:"color_class,omitempty"`
+}
+
+type savingsInfo struct {
+	Type        string `json:"type"`
+	Description string `json:"description"`
+	Phone       string `json:"phone,omitempty"`
+	Link        string `json:"link,omitempty"`
+	Eligibility struct {
+		PrivateInsurance    bool `json:"private_insurance,omitempty"`
+		GovernmentInsurance bool `json:"government_insurance,omitempty"`
+		CashPay             bool `json:"cash_pay,omitempty"`
+	} `json:"eligibility,omitempty"`
 }
 
 func getCatalog(path string) ([]product, error) {

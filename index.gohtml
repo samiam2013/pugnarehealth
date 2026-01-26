@@ -239,26 +239,46 @@
                                     </div>
                                 </div>
 
-                                <div class="drug-savings">
-                                    <p class="drug-savings-label">💰 Available Savings Programs</p>
-                                    <p class="drug-savings-programs">{{.Savings}}</p>
-                                </div>
                             </div>
 
-                            <div class="drug-actions">
-                                <a href="{{.Link}}" target="_blank" rel="noopener noreferrer"
-                                    class="btn btn-primary {{.ColorClass}}">
-                                    <span>View Savings Programs</span>
-                                    <svg width="16" height="16">
-                                        <use href="#external-link-icon" />
-                                    </svg>
-                                </a>
-                                <a href="tel:{{.Phone}}" class="btn btn-secondary">
-                                    <svg width="16" height="16">
-                                        <use href="#phone-icon-mini" />
-                                    </svg>
-                                    <span>{{.Phone}}</span>
-                                </a>
+                            <div class="drug-savings">
+                                {{$colorClass := .ColorClass}}
+                                {{range .Savings}}
+                                <div class="savings-program">
+                                    <p class="drug-savings-label">{{.Type}}</p>
+                                    <p class="savings-program-description">{{.Description}}</p>
+                                    {{if or .Eligibility.PrivateInsurance .Eligibility.GovernmentInsurance .Eligibility.CashPay}}
+                                    <div class="eligibility-tags">
+                                        {{if .Eligibility.PrivateInsurance}}<span class="eligibility-tag tag-private">Private Insurance</span>{{end}}
+                                        {{if .Eligibility.GovernmentInsurance}}<span class="eligibility-tag tag-government">Gov. Insurance</span>{{end}}
+                                        {{if .Eligibility.CashPay}}<span class="eligibility-tag tag-cash">Cash Pay</span>{{end}}
+                                    </div>
+                                    {{end}}
+                                    <div class="savings-program-actions">
+                                        {{if .Link}}
+                                        <a href="{{.Link}}" target="_blank" rel="noopener noreferrer"
+                                            class="btn btn-primary {{$colorClass}}">
+                                            <span>View Savings Program</span>
+                                            <svg width="16" height="16">
+                                                <use href="#external-link-icon" />
+                                            </svg>
+                                        </a>
+                                        {{end}}
+                                        {{if .Phone}}
+                                        <a href="tel:{{.Phone}}" class="btn btn-secondary">
+                                            <svg width="16" height="16">
+                                                <use href="#phone-icon-mini" />
+                                            </svg>
+                                            <span>{{.Phone}}</span>
+                                        </a>
+                                        {{end}}
+                                    </div>
+                                </div>
+                                {{end}}
+                            </div>
+
+                            {{if or .FDALabelFile .FDALabelNeedsUpdate}}
+                            <div class="drug-fda-actions">
                                 {{if .FDALabelFile}}
                                 <a href="{{.FDALabelFile}}" target="_blank" rel="noopener noreferrer"
                                     class="btn btn-tertiary">
@@ -270,12 +290,11 @@
                                 {{end}}
                                 {{if .FDALabelNeedsUpdate}}
                                 <div class="fda-label-update-notice btn btn-tertiary">
-                                    <span>
-                                        ⚠️ Needs Update
-                                    </span>
+                                    <span>⚠️ Needs Update</span>
                                 </div>
                                 {{end}}
                             </div>
+                            {{end}}
                         </div>
                     </div>
                 </div>

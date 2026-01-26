@@ -355,12 +355,66 @@ body {
     gap: 1.5rem;
 }
 
-@media (min-width: 1024px) {
-    .drug-card-inner {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-    }
+/* savings program within a drug card */
+.savings-program {
+    padding: 0.75rem 0;
+}
+
+.savings-program + .savings-program {
+    border-top: 1px solid var(--color-green-200);
+}
+
+.savings-program-description {
+    font-size: 0.875rem;
+    color: var(--color-slate-700);
+    line-height: 1.5;
+}
+
+.eligibility-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.5rem;
+}
+
+.eligibility-tag {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+}
+
+.tag-private {
+    background: var(--color-blue-50);
+    color: var(--color-blue-600);
+    border: 1px solid var(--color-blue-100);
+}
+
+.tag-government {
+    background: #faf5ff;
+    color: #7c3aed;
+    border: 1px solid #ede9fe;
+}
+
+.tag-cash {
+    background: var(--color-green-50);
+    color: var(--color-green-600);
+    border: 1px solid var(--color-green-200);
+}
+
+.savings-program-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.drug-fda-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .drug-info {
@@ -829,6 +883,28 @@ body {
 [data-theme="dark"] .header-badge {
     background: rgba(30, 58, 95, 0.5);
     border-color: #3b82f6;
+}
+
+[data-theme="dark"] .tag-private {
+    background: rgba(30, 58, 95, 0.5);
+    color: #93c5fd;
+    border-color: #1e40af;
+}
+
+[data-theme="dark"] .tag-government {
+    background: rgba(76, 29, 149, 0.3);
+    color: #c4b5fd;
+    border-color: #5b21b6;
+}
+
+[data-theme="dark"] .tag-cash {
+    background: rgba(20, 83, 45, 0.4);
+    color: #86efac;
+    border-color: #166534;
+}
+
+[data-theme="dark"] .savings-program + .savings-program {
+    border-top-color: #166534;
 }
 
 /* Smooth theme transition */
