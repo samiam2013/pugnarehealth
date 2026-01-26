@@ -15,7 +15,7 @@
         rel="stylesheet">
     <script>
         // Prevent flash of wrong theme by setting data-theme before render
-        (function() {
+        (function () {
             const saved = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const theme = saved || (prefersDark ? 'dark' : 'light');
@@ -93,8 +93,8 @@
                 <circle cx="12" cy="21" r="2.5" />
             </g>
         </symbol>
-        <symbol id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <symbol id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5" />
             <line x1="12" y1="1" x2="12" y2="3" />
             <line x1="12" y1="21" x2="12" y2="23" />
@@ -105,8 +105,8 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </symbol>
-        <symbol id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <symbol id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </symbol>
     </svg>
@@ -135,7 +135,8 @@
                         </svg>
                         <span id="drug-count">{{len .Products}} medications with savings options</span>
                     </div>
-                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle dark mode">
                         <svg class="icon-sun">
                             <use href="#sun-icon" />
                         </svg>
@@ -238,7 +239,6 @@
                                         <p class="drug-detail-value">{{.DoseFrequency}}</p>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="drug-savings">
@@ -247,30 +247,31 @@
                                 <div class="savings-program">
                                     <p class="drug-savings-label">{{.Type}}</p>
                                     <p class="savings-program-description">{{.Description}}</p>
-                                    {{if or .Eligibility.PrivateInsurance .Eligibility.GovernmentInsurance .Eligibility.CashPay}}
+                                    {{if or .Eligibility.PrivateInsurance .Eligibility.GovernmentInsurance
+                                    .Eligibility.CashPay}}
                                     <div class="eligibility-tags">
-                                        {{if .Eligibility.PrivateInsurance}}<span class="eligibility-tag tag-private">Private Insurance</span>{{end}}
-                                        {{if .Eligibility.GovernmentInsurance}}<span class="eligibility-tag tag-government">Gov. Insurance</span>{{end}}
-                                        {{if .Eligibility.CashPay}}<span class="eligibility-tag tag-cash">Cash Pay</span>{{end}}
+                                        {{if .Eligibility.PrivateInsurance}}<span
+                                            class="eligibility-tag tag-private">Private Insurance</span>{{end}}
+                                        {{if .Eligibility.GovernmentInsurance}}<span
+                                            class="eligibility-tag tag-government">Gov. Insurance</span>{{end}}
+                                        {{if .Eligibility.CashPay}}<span class="eligibility-tag tag-cash">Cash
+                                            Pay</span>{{end}}
                                     </div>
                                     {{end}}
                                     {{if .Eligibility.OtherCriteria}}
                                     <div class="eligibility-criteria">
                                         <ul class="criteria-list">
                                             {{range $i, $c := .Eligibility.OtherCriteria}}
-                                            {{if lt $i 3}}
-                                            <li title="{{$c}}">{{truncate $c 60}}</li>
-                                            {{end}}
+                                            {{if lt $i 3}}<li title="{{$c}}">{{truncate $c 60}}</li>{{end}}
                                             {{end}}
                                         </ul>
                                         {{if gt (len .Eligibility.OtherCriteria) 3}}
                                         <details class="criteria-more">
-                                            <summary>+{{subtract (len .Eligibility.OtherCriteria) 3}} more criteria</summary>
+                                            <summary>+{{subtract (len .Eligibility.OtherCriteria) 3}} more criteria
+                                            </summary>
                                             <ul class="criteria-list">
                                                 {{range $i, $c := .Eligibility.OtherCriteria}}
-                                                {{if ge $i 3}}
-                                                <li>{{$c}}</li>
-                                                {{end}}
+                                                {{if ge $i 3}}<li>{{$c}}</li>{{end}}
                                                 {{end}}
                                             </ul>
                                         </details>
@@ -369,7 +370,7 @@
     </div>
 
     <script>
-        (function() {
+        (function () {
             const toggle = document.getElementById('theme-toggle');
             const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -391,7 +392,7 @@
             setTheme(getTheme());
 
             // Handle toggle click
-            toggle.addEventListener('click', function() {
+            toggle.addEventListener('click', function () {
                 const current = document.documentElement.getAttribute('data-theme');
                 const newTheme = current === 'dark' ? 'light' : 'dark';
                 setTheme(newTheme);
@@ -399,7 +400,7 @@
             });
 
             // Listen for OS theme changes (only if user hasn't set preference)
-            prefersDarkQuery.addEventListener('change', function(e) {
+            prefersDarkQuery.addEventListener('change', function (e) {
                 if (!localStorage.getItem('theme')) {
                     setTheme(e.matches ? 'dark' : 'light');
                 }
