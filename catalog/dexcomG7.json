@@ -28,7 +28,7 @@
                 "other_criteria": [
                     "requires application",
                     "resident of the United States",
-                    "diagnosed with Type 1 Diabetes by a US prescribing physician",
+                    "type 1 Diabetes diagnosis by a US prescribing physician",
                     "taking insulin daily to treat the diabetes diagnosis",
                     "either does not have insurance or Dexcom is unaffordable with the current insurance plan",
                     "has checked for Dexcom coverage at their local pharmacy and through a medical supplier and deemed it unaffordable",
