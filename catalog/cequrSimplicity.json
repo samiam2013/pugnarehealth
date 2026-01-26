@@ -4,8 +4,18 @@
     "medicine_type": "Manual Insulin Pump",
     "administration_route": "Automatic Applicator",
     "dose_frequency": "Once every 10 days",
-    "savings": "Pay less than $35 a month if eligible ($5 or less for inserter)",
-    "phone": "1-844-960-7143",
-    "link": "https://myceqursimplicity.com/savings/",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay less than $35 a month if eligible ($5 or less for inserter)",
+            "phone": "1-844-960-7143",
+            "link": "https://myceqursimplicity.com/savings/",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
     "color_class": "gradient-sky"
 }

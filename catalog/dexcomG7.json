@@ -4,8 +4,39 @@
     "medicine_type": "Continuous Glucose Monitor",
     "administration_route": "Automatic Applicator",
     "dose_frequency": "Once every 10 days",
-    "savings": "Pay as little as ~$130 a month with copay card if eligible",
-    "phone": "1-833-235-9634",
-    "link": "https://www.dexcom.com/savings-center",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $0 Copay for Dexcom G7 if eligible",
+            "phone": "1-833-235-9634",
+            "link": "https://www.dexcom.com/savings-center",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        },
+        {
+            "type": "Patient Assistance Program",
+            "description": "Get Dexcom G7 for free if eligible",
+            "phone": "1-833-235-9634",
+            "link": "https://assistance.dexcom.com/PAPSelfService/Welcome",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true,
+                "other_criteria": [
+                    "requires application",
+                    "resident of the United States",
+                    "diagnosed with Type 1 Diabetes by a US prescribing physician",
+                    "taking insulin daily to treat the diabetes diagnosis",
+                    "either does not have insurance or Dexcom is unaffordable with the current insurance plan",
+                    "has checked for Dexcom coverage at their local pharmacy and through a medical supplier and deemed it unaffordable",
+                    "meets the household income guidelines for the program: 400% of National Poverty Level (subject to change and as supplies last)",
+                    "2 years of age or older"
+                ]
+            }
+        }
+    ],
     "color_class": "gradient-emerald"
 }

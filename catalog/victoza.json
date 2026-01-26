@@ -4,9 +4,19 @@
     "medicine_type": "GLP-1 Agonist",
     "administration_route": "Subcutaneous Injection",
     "dose_frequency": "Once Daily",
-    "savings": "Patient Assistance Program, Discount programs available",
-    "phone": "1-866-310-7549",
-    "link": "https://www.novocare.com/diabetes/products/victoza.html",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Patient Assistance Program, Discount programs available",
+            "phone": "1-866-310-7549",
+            "link": "https://www.novocare.com/diabetes/products/victoza.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": true,
+                "cash_pay": true
+            }
+        }
+    ],
     "color_class": "gradient-pink",
     "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2010/022341lbl.pdf",
     "fda_label_file_updated": "2026-01-11"

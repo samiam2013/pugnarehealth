@@ -4,9 +4,19 @@
     "medicine_type": "GLP-1 Agonist",
     "administration_route": "Subcutaneous Injection",
     "dose_frequency": "Once Weekly",
-    "savings": "Savings Card ($25/mo), Patient Assistance Program, Medicare Prescription Payment Plan",
-    "phone": "1-888-793-1218",
-    "link": "https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Savings Card ($25/mo), Patient Assistance Program, Medicare Prescription Payment Plan",
+            "phone": "1-888-793-1218",
+            "link": "https://www.wegovy.com/coverage-and-savings/save-on-wegovy.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": true,
+                "cash_pay": true
+            }
+        }
+    ],
     "color_class": "gradient-cyan",
     "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/215256s023lbl.pdf",
     "fda_label_file_updated": "2026-01-11"

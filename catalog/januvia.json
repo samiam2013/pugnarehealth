@@ -4,9 +4,19 @@
     "medicine_type": "DPP-4 Inhibitor",
     "administration_route": "Oral Tablet",
     "dose_frequency": "Once Daily",
-    "savings": "Pay as little as $0 a month if eligible",
-    "phone": "1-800-727-5400",
-    "link": "https://merckhelps.com/JANUVIA",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $0 a month if eligible",
+            "phone": "1-800-727-5400",
+            "link": "https://merckhelps.com/JANUVIA",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
     "color_class": "gradient-sky",
     "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/021995Orig1s053lbl.pdf",
     "fda_label_file_updated": "2026-01-11"

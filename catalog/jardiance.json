@@ -4,9 +4,19 @@
     "medicine_type": "SGLT-2 Inhibitor",
     "administration_route": "Oral Tablet",
     "dose_frequency": "Once Daily",
-    "savings": "Pay as little as $10 a month for a 1 to 3-month prescription if eligible",
-    "phone": "1-866-279-8990",
-    "link": "https://patient.boehringer-ingelheim.com/us/products/jardiance/type-2-diabetes/savings",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $10 a month for a 1 to 3-month prescription if eligible",
+            "phone": "1-866-279-8990",
+            "link": "https://patient.boehringer-ingelheim.com/us/products/jardiance/type-2-diabetes/savings",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
     "color_class": "gradient-teal",
     "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
     "fda_label_file_updated": "2026-01-11"

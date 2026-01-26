@@ -4,8 +4,18 @@
     "medicine_type": "Continuous Glucose Monitor",
     "administration_route": "Automatic Applicator",
     "dose_frequency": "Once every 15 days",
-    "savings": "Pay as little as $60 a month with copay card if eligible",
-    "phone": "1-855-632-8658",
-    "link": "https://www.freestyle.abbott/content/dam/adc/freestyle/countries/us-en/documents/copay-savings-card.pdf",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $60 a month with copay card if eligible",
+            "phone": "1-855-632-8658",
+            "link": "https://www.freestyle.abbott/content/dam/adc/freestyle/countries/us-en/documents/copay-savings-card.pdf",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
     "color_class": "gradient-amber"
 }

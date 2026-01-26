@@ -4,9 +4,19 @@
     "medicine_type": "SGLT-2 Inhibitor",
     "administration_route": "Oral Tablet",
     "dose_frequency": "Once Daily",
-    "savings": "Pay as little as $0 a month if eligible",
-    "phone": "1-855-332-7944",
-    "link": "https://www.farxiga.com/savings-support/",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $0 a month if eligible",
+            "phone": "1-855-332-7944",
+            "link": "https://www.farxiga.com/savings-support/",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
     "color_class": "gradient-orange",
     "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/202293s031lbl.pdf",
     "fda_label_file_updated": "2026-01-11"
