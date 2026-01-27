@@ -8,13 +8,30 @@
     "savings": [
         {
             "type": "Copay Discount Card",
-            "description": "Savings Card ($25/mo), Patient Assistance Program (uninsured), Medicare Prescription Payment Plan",
+            "description": "Pay as little as $25 up to a 3-month prescription, cash pay as little as $199 for 1st dose",
             "phone": "1-866-310-7549",
             "link": "https://www.novocare.com/diabetes/products/ozempic/savings-offer.html",
             "eligibility": {
                 "private_insurance": true,
-                "government_insurance": true,
+                "government_insurance": false,
                 "cash_pay": true
+            }
+        },
+        {
+            "type": "Patient Assistance Program",
+            "description": "Novocare: assistance for eligible medicare or cash-pay patients",
+            "phone": "1-800-727-6500",
+            "link": "https://www.novocare.com/diabetes/patient-assistance-program.html",
+            "eligibility": {
+                "private_insurance": false,
+                "government_insurance": true,
+                "cash_pay": true,
+                "other_criteria": [
+                    "Be a US citizen or legal resident",
+                    "Household income that qualifies. Visit the NeedyMeds website, which lists the current Federal Poverty Level guidelines",
+                    "If you are eligible for Medicaid or Medicare LIS, you must submit a copy of your denial letter with your application.",
+                    "Not be enrolled in or qualify for any other (besides medicare) federal, state, or government program such as Medicaid, Medicare Low Income Subsidy (LIS, or Extra Help Program), or Veterans Affairs (VA) Benefits"
+                ]
             }
         }
     ],
