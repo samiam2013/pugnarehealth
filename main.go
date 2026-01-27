@@ -20,24 +20,27 @@ const repoPath = "./"
 const medCatalogPath = "catalog/"
 
 var medTypes = map[string]struct{}{
-	"Continuous Glucose Monitor": {},
-	"Manual Insulin Pump":        {},
-	"SGLT-2 Inhibitor":           {},
-	"GLP-1 Agonist":              {},
-	"DPP-4 Inhibitor":            {},
-	"GLP-1/GIP Dual Agonist":     {},
+	"Continuous Glucose Monitor":        {},
+	"Manual Insulin Pump":               {},
+	"SGLT-2 Inhibitor":                  {},
+	"GLP-1 Agonist":                     {},
+	"DPP-4 Inhibitor":                   {},
+	"GLP-1/GIP Dual Agonist":            {},
+	"Automated Insulin Delivery System": {},
 }
 
 var adminRoutes = map[string]struct{}{
 	"Oral Tablet":            {},
 	"Subcutaneous Injection": {},
 	"Automatic Applicator":   {},
+	"Tubeless Insulin Pump":  {},
 }
 
 var savingsTypes = map[string]struct{}{
 	"Copay Discount Card":                {},
 	"Patient Assistance Program":         {},
 	"Medicare Prescription Payment Plan": {},
+	"Free Trial Offer":                   {},
 }
 
 func main() {
@@ -55,7 +58,7 @@ func main() {
 	if !skipUpdateCheck {
 		brandNames := []string{}
 		for _, p := range products {
-			if p.AdminRoute == "Automatic Applicator" {
+			if p.AdminRoute == "Automatic Applicator" || p.AdminRoute == "Tubeless Insulin Pump" {
 				continue // skip CGMs, pumps, etc without FDA labels
 			}
 			brandNames = append(brandNames, p.BrandName)
