@@ -8,13 +8,23 @@
     "savings": [
         {
             "type": "Copay Discount Card",
-            "description": "Pay as little as $0 Copay for Dexcom G7 if eligible",
+            "description": "Pay as little as $0 Copay for Dexcom G7 if eligible (or save on cash pay)",
             "phone": "1-833-235-9634",
             "link": "https://www.dexcom.com/savings-center",
             "eligibility": {
                 "private_insurance": true,
                 "government_insurance": false,
-                "cash_pay": false
+                "cash_pay": true
+            }
+        },
+        {
+            "type": "Free Trial Offer",
+            "description": "Get 1 free Dexcom G7 sensor to try with a prescription",
+            "link": "https://www.dexcom.com/freetrial#freeSample",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true
             }
         },
         {

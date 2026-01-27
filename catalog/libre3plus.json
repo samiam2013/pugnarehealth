@@ -14,7 +14,17 @@
             "eligibility": {
                 "private_insurance": true,
                 "government_insurance": false,
-                "cash_pay": false
+                "cash_pay": true
+            }
+        },
+        {
+            "type": "Free Trial Offer",
+            "description": "Get 1 free sensor to try with a prescription",
+            "link": "https://www.freestyle.abbott/us-en/myfreestyle-freestyle-libre-3.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": true,
+                "cash_pay": true
             }
         }
     ],

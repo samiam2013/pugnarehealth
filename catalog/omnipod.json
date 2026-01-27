@@ -1,0 +1,57 @@
+{
+    "list_position": 11,
+    "ingredient_name": "Insulin pump pods",
+    "brand_name": "Omnipod 5",
+    "medicine_type": "Automated Insulin Delivery System",
+    "administration_route": "Tubeless Insulin Pump",
+    "dose_frequency": "Every 3 days (pod change)",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $50 copay per month for Omnipod 5 Pods with commercial insurance. Saves up to $100/month on copays of $50 or more.",
+            "phone": "1-800-591-3455",
+            "link": "https://www.omnipod.com/is-omnipod-right-for-me/coverage",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        },
+        {
+            "type": "Free Trial Offer",
+            "description": "Get a free Omnipod 5 Intro Kit (includes Controller + 10 Pods) for 30 days with a valid prescription",
+            "link": "https://www.omnipod.com/gs/ft/1a",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false,
+                "other_criteria": [
+                    "requires valid Omnipod 5 and compatible CGM prescription",
+                    "insurance must cover Omnipod 5 Pods",
+                    "US, Puerto Rico, and US territories only",
+                    "new to Pod Therapy only (coming from MDI or tubed pumps), never used Omnipod 5, Omnipod DASH, or original Omnipod"
+                ]
+            }
+        },
+        {
+            "type": "Patient Assistance Program",
+            "description": "Copay assistance covering eligible out-of-pocket costs (copay, deductible, co-insurance) for those with demonstrated financial need",
+            "phone": "1-800-591-3455",
+            "link": "https://www.omnipod.com/is-omnipod-right-for-me/coverage/financial-assistance",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false,
+                "other_criteria": [
+                    "requires application with income verification",
+                    "US resident",
+                    "must demonstrate financial need based on Insulet criteria",
+                    "valid Omnipod DASH or Omnipod 5 prescription",
+                    "must fill through Pharmacy channel",
+                    "copay card valid for 12 months"
+                ]
+            }
+        }
+    ],
+    "color_class": "gradient-blue"
+}
