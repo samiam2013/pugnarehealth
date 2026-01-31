@@ -27,6 +27,7 @@ var medTypes = map[string]struct{}{
 	"DPP-4 Inhibitor":                   {},
 	"GLP-1/GIP Dual Agonist":            {},
 	"Automated Insulin Delivery System": {},
+	"Insulin":                           {},
 }
 
 var adminRoutes = map[string]struct{}{

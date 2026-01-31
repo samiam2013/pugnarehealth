@@ -1,0 +1,38 @@
+{
+    "ingredient_name": "Insulin Glargine 300 Units/mL",
+    "brand_name": "Toujeo",
+    "medicine_type": "Insulin",
+    "administration_route": "Subcutaneous Injection",
+    "dose_frequency": "Once Daily",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay no more than $35 for a 1 or multiple month supply of Sanofi insulins",
+            "link": "https://www.sanofipatientconnection.com/savings-registration?BrandName=Toujeo",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        },
+        {
+            "type": "Patient Assistance Program",
+            "description": "Sanofi Patient Connection: No cost for eligible patients",
+            "link": "https://www.sanofipatientconnection.com/patient-assistance-connection",
+            "phone": "1-888-847-1797",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true,
+                "other_criteria":[
+                    "Resident of the United States or Puerto Rico",
+                    "Annual household income at or below 400% of the Federal Poverty Level",
+                    "Not covered by private insurance or ineligible through Medicaid, etc. (see more details at the link)"
+                ]
+            }
+        }
+    ],
+    "color_class": "gradient-emerald",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/206538Orig1s017Lbl.pdf",
+    "fda_label_file_updated": "2026-01-30"
+}
