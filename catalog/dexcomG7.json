@@ -1,8 +1,8 @@
 {
     "list_position": 9,
-    "ingredient_name": "CGM sensor",
+    "ingredient_name": "Continuous Glucose Monitoring Sensor",
     "brand_name": "Dexcom G7",
-    "medicine_type": "Continuous Glucose Monitor",
+    "medicine_type": "CGM",
     "administration_route": "Automatic Applicator",
     "dose_frequency": "Once every 10 days",
     "savings": [

@@ -1,7 +1,7 @@
 {
     "ingredient_name": "Sitagliptin",
     "brand_name": "Januvia",
-    "medicine_type": "DPP-4 Inhibitor",
+    "medicine_type": "DPP-4",
     "administration_route": "Oral Tablet",
     "dose_frequency": "Once Daily",
     "savings": [
