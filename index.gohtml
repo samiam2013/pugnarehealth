@@ -202,11 +202,27 @@
                 </div>
             </section>
 
+            <!-- Filter & Sort Toolbar -->
+            <div class="filter-sort-toolbar">
+                <div class="filter-buttons" id="filter-buttons">
+                    <!-- Populated by JS from data-medicine-type attributes -->
+                </div>
+                <div class="sort-control">
+                    <label for="sort-select" class="sort-label">Sort by:</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="default">Default Order</option>
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="type-asc">Medicine Type (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Drug Cards Container -->
             <section id="drug-cards-container" class="drug-cards">
 
                 {{range .Products}}
-                <div class="drug-card"><!-- style="animation-delay: 1+ index *0.5 s" -->
+                <div class="drug-card" data-medicine-type="{{.MedicineType}}" data-brand-name="{{.BrandName}}">
                     <div class="drug-card-accent {{.ColorClass}}"></div>
                     <div class="drug-card-content">
                         <div class="drug-card-inner">
@@ -405,6 +421,94 @@
                     setTheme(e.matches ? 'dark' : 'light');
                 }
             });
+        })();
+    </script>
+    <script>
+        (function () {
+            var container = document.getElementById('drug-cards-container');
+            var cards = Array.from(container.querySelectorAll('.drug-card'));
+            var filterContainer = document.getElementById('filter-buttons');
+            var sortSelect = document.getElementById('sort-select');
+            var noResults = document.getElementById('no-results');
+
+            // Store original order
+            cards.forEach(function (card, i) { card.dataset.originalIndex = i; });
+
+            // Collect unique medicine types
+            var types = [];
+            cards.forEach(function (card) {
+                var t = card.dataset.medicineType;
+                if (t && types.indexOf(t) === -1) types.push(t);
+            });
+            types.sort();
+
+            // Build filter buttons
+            var allBtn = document.createElement('button');
+            allBtn.className = 'filter-btn active';
+            allBtn.textContent = 'All';
+            allBtn.dataset.type = '';
+            filterContainer.appendChild(allBtn);
+
+            types.forEach(function (t) {
+                var btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.textContent = t;
+                btn.dataset.type = t;
+                filterContainer.appendChild(btn);
+            });
+
+            var activeFilter = '';
+
+            filterContainer.addEventListener('click', function (e) {
+                var btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                filterContainer.querySelectorAll('.filter-btn').forEach(function (b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                activeFilter = btn.dataset.type;
+                applyFilterAndSort();
+            });
+
+            sortSelect.addEventListener('change', function () {
+                applyFilterAndSort();
+            });
+
+            function applyFilterAndSort() {
+                // Filter
+                var visible = [];
+                cards.forEach(function (card) {
+                    if (!activeFilter || card.dataset.medicineType === activeFilter) {
+                        card.style.display = '';
+                        visible.push(card);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = visible.length === 0 ? '' : 'none';
+
+                // Sort visible cards
+                var sortVal = sortSelect.value;
+                if (sortVal === 'name-asc') {
+                    visible.sort(function (a, b) { return a.dataset.brandName.localeCompare(b.dataset.brandName); });
+                } else if (sortVal === 'name-desc') {
+                    visible.sort(function (a, b) { return b.dataset.brandName.localeCompare(a.dataset.brandName); });
+                } else if (sortVal === 'type-asc') {
+                    visible.sort(function (a, b) {
+                        var cmp = a.dataset.medicineType.localeCompare(b.dataset.medicineType);
+                        return cmp !== 0 ? cmp : a.dataset.brandName.localeCompare(b.dataset.brandName);
+                    });
+                } else {
+                    visible.sort(function (a, b) { return a.dataset.originalIndex - b.dataset.originalIndex; });
+                }
+
+                // Re-append in sorted order (hidden cards stay at end)
+                visible.forEach(function (card) { container.appendChild(card); });
+                cards.forEach(function (card) {
+                    if (card.style.display === 'none') container.appendChild(card);
+                });
+            }
         })();
     </script>
 </body>

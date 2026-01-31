@@ -20,14 +20,12 @@ const repoPath = "./"
 const medCatalogPath = "catalog/"
 
 var medTypes = map[string]struct{}{
-	"Continuous Glucose Monitor":        {},
-	"Manual Insulin Pump":               {},
-	"SGLT-2 Inhibitor":                  {},
-	"GLP-1 Agonist":                     {},
-	"DPP-4 Inhibitor":                   {},
-	"GLP-1/GIP Dual Agonist":            {},
-	"Automated Insulin Delivery System": {},
-	"Insulin":                           {},
+	"CGM":                     {},
+	"SGLT-2":                  {},
+	"GLP-1":                   {},
+	"DPP-4":                   {},
+	"Insulin Delivery System": {},
+	"Insulin":                 {},
 }
 
 var adminRoutes = map[string]struct{}{

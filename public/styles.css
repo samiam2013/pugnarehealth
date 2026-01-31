@@ -288,6 +288,90 @@ body {
     line-height: 1.5;
 }
 
+/* Filter & Sort Toolbar */
+.filter-sort-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: slide-up 0.8s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    border: 1px solid var(--color-slate-200);
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--color-slate-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    background: var(--color-slate-100);
+    border-color: var(--color-slate-400);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.sort-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.sort-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-slate-500);
+    white-space: nowrap;
+}
+
+.sort-select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    border: 1px solid var(--color-slate-200);
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--color-slate-700);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    transition: all 0.2s ease;
+}
+
+.sort-select:hover {
+    border-color: var(--color-slate-400);
+}
+
+.sort-select:focus {
+    outline: 2px solid var(--color-blue-500);
+    outline-offset: 2px;
+}
+
 /* Drug Cards */
 .drug-cards {
     display: flex;
@@ -855,6 +939,34 @@ body {
     border-color: var(--color-slate-200);
 }
 
+[data-theme="dark"] .filter-btn {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: var(--color-slate-200);
+    color: var(--color-slate-600);
+}
+
+[data-theme="dark"] .filter-btn:hover {
+    background: rgba(51, 65, 85, 0.8);
+    border-color: var(--color-slate-400);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+    color: white;
+    border-color: transparent;
+}
+
+[data-theme="dark"] .sort-select {
+    background-color: rgba(30, 41, 59, 0.8);
+    border-color: var(--color-slate-200);
+    color: var(--color-slate-700);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .sort-select:hover {
+    border-color: var(--color-slate-400);
+}
+
 [data-theme="dark"] .drug-card {
     background: rgba(30, 41, 59, 0.9);
     border-color: var(--color-slate-200);
@@ -984,6 +1096,7 @@ html {
 }
 
 html, body, .header, .info-card, .drug-card, .btn-secondary, .btn-tertiary,
-.important-info, .footer, .theme-toggle, .drug-detail, .drug-savings {
+.important-info, .footer, .theme-toggle, .drug-detail, .drug-savings,
+.filter-btn, .sort-select {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
