@@ -166,3 +166,38 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 	}
 	return results, nil
 }
+
+func checkForLabelUpdates(products []product) error {
+	brandNames := []string{}
+	for _, p := range products {
+		if p.AdminRoute == "Automatic Applicator" || p.AdminRoute == "Tubeless Insulin Pump" {
+			continue // skip CGMs, pumps, etc without FDA labels
+		}
+		brandNames = append(brandNames, p.BrandName)
+	}
+
+	recencyResults, err := fdaLabelRecencyLookup(brandNames)
+	if err != nil {
+		return errors.Join(errors.New("error looking up FDA label recency"), err)
+	}
+
+	// print out the results
+	for i, p := range products {
+		recency, ok := recencyResults[p.BrandName]
+		if !ok {
+			return fmt.Errorf("no FDA label recency found for brand name: %s", p.BrandName)
+		}
+		lastUpdated, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+		if err != nil {
+			return errors.Join(fmt.Errorf("error parsing existing FDA label updated date for %s: %v", p.BrandName, err), err)
+		}
+		if recency.After(lastUpdated) {
+			/*
+				fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
+					p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
+			*/
+			products[i].FDALabelNeedsUpdate = true
+		}
+	}
+	return nil
+}

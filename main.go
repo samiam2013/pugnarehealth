@@ -56,113 +56,17 @@ func main() {
 	}
 
 	if !skipUpdateCheck {
-		brandNames := []string{}
-		for _, p := range products {
-			if p.AdminRoute == "Automatic Applicator" || p.AdminRoute == "Tubeless Insulin Pump" {
-				continue // skip CGMs, pumps, etc without FDA labels
-			}
-			brandNames = append(brandNames, p.BrandName)
-		}
-
-		recencyResults, err := fdaLabelRecencyLookup(brandNames)
-		if err != nil {
-			fmt.Println("Error looking up FDA label recency:", err)
+		if err = checkForLabelUpdates(products); err != nil {
+			fmt.Println("Error checking for FDA label updates:", err)
 			os.Exit(1)
-		}
-
-		// print out the results
-		for i, p := range products {
-			recency, ok := recencyResults[p.BrandName]
-			if !ok {
-				fmt.Printf("No FDA label recency found for %s\n", p.BrandName)
-				continue
-			}
-			lastUpdated, err := time.Parse("2006-01-02", p.FDALabelUpdated)
-			if err != nil {
-				fmt.Printf("Error parsing existing FDA label updated date for %s: %v\n", p.BrandName, err)
-				continue
-			}
-			if recency.After(lastUpdated) {
-				fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
-					p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
-				products[i].FDALabelNeedsUpdate = true
-			}
 		}
 	}
 
-	phoneRe := regexp.MustCompile(`^1-\d{3}-\d{3}-\d{4}$`)
 	// validate the products
 	for _, p := range products {
-		// Check that the unconstrained fields are not empty
-		if slices.Contains([]string{p.BrandName, p.IngredientName, p.DoseFrequency}, "") {
-			panic("Brand name, ingredient name, and dose frequency cannot be empty")
-		}
-		if len(p.Savings) == 0 {
-			fmt.Printf("Failed: Savings information is empty for product '%s'\n", p.BrandName)
+		if err = p.Validate(); err != nil {
+			fmt.Printf("Validation error for product %s: %v\n", p.BrandName, err)
 			os.Exit(1)
-		}
-
-		// check the medicine type is one in the list
-		if err := medTypeEnum.CheckError(p.MedicineType); err != nil {
-			panic(err)
-		}
-
-		// check the administration route is one in the list
-		if err := adminRouteEnum.CheckError(p.AdminRoute); err != nil {
-			panic(err)
-		}
-
-		// validate each savings program's phone and link
-		for _, sp := range p.Savings {
-			if strings.TrimSpace(sp.Description) == "" {
-				panic("Savings description cannot be empty for product " + p.BrandName)
-			}
-			if strings.TrimSpace(sp.Phone) != "" {
-				if !phoneRe.MatchString(sp.Phone) {
-					panic(fmt.Sprintf("Phone number '%s' for product '%s' is not in the format 1-800-555-5555", sp.Phone, p.BrandName))
-				}
-			}
-			if strings.TrimSpace(sp.Link) != "" {
-				if !strings.HasPrefix(sp.Link, "http://") && !strings.HasPrefix(sp.Link, "https://") {
-					fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", sp.Link, p.BrandName)
-					os.Exit(1)
-				}
-			}
-			if err := savingsTypeEnum.CheckError(sp.Type); err != nil {
-				panic(err)
-			}
-		}
-
-		// if there is an fda label link
-		if strings.TrimSpace(p.FDALabelFile) != "" {
-			// make sure the updated date is in YYYY-MM-DD format
-			updateTime, err := time.Parse("2006-01-02", p.FDALabelUpdated)
-			if err != nil {
-				fmt.Printf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format\n", p.FDALabelUpdated, p.BrandName)
-				os.Exit(1)
-			}
-			// it's impossible to have updated the label in the future
-			if updateTime.After(time.Now()) {
-				fmt.Printf("Failed: FDA label updated date '%s' for product '%s' is in the future\n", p.FDALabelUpdated, p.BrandName)
-				os.Exit(1)
-			}
-			// make sure the link is to FDA's label repository
-			if !strings.HasPrefix(p.FDALabelFile, "https://www.accessdata.fda.gov/drugsatfda_docs/label/") {
-				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a valid FDA label repository URL\n", p.FDALabelFile, p.BrandName)
-				os.Exit(1)
-			}
-			// make sure the link is valid (parses as a URL)
-			u, err := url.ParseRequestURI(p.FDALabelFile)
-			if err != nil {
-				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a valid URL\n", p.FDALabelFile, p.BrandName)
-				os.Exit(1)
-			}
-			// it has to be a link to a PDF
-			if !strings.HasSuffix(strings.ToLower(u.Path), ".pdf") {
-				fmt.Printf("Failed: FDA label file link '%s' for product '%s' is not a link to a PDF file\n", p.FDALabelFile, p.BrandName)
-				os.Exit(1)
-			}
-			// TODO send a HEAD request to make sure the link is reachable?
 		}
 
 		// TODO: check/generate css colors/classes from one source?
@@ -192,6 +96,33 @@ func main() {
 	}
 }
 
+func validateFDALabelLink(p product) error {
+	// make sure the updated date is in YYYY-MM-DD format
+	updateTime, err := time.Parse("2006-01-02", p.FDALabelUpdated)
+	if err != nil {
+		return errors.Join(fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format\n", p.FDALabelUpdated, p.BrandName, err))
+	}
+	// it's impossible to have updated the label in the future
+	if updateTime.After(time.Now()) {
+		return fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is in the future", p.FDALabelUpdated, p.BrandName)
+	}
+	// make sure the link is to FDA's label repository
+	if !strings.HasPrefix(p.FDALabelFile, "https://www.accessdata.fda.gov/drugsatfda_docs/label/") {
+		return fmt.Errorf("Failed: FDA label file link '%s' for product '%s' is not a valid FDA label repository URL", p.FDALabelFile, p.BrandName)
+	}
+	// make sure the link is valid (parses as a URL)
+	u, err := url.ParseRequestURI(p.FDALabelFile)
+	if err != nil {
+		return fmt.Errorf("Failed: FDA label file link '%s' for product '%s' is not a valid URL", p.FDALabelFile, p.BrandName)
+	}
+	// it has to be a link to a PDF
+	if !strings.HasSuffix(strings.ToLower(u.Path), ".pdf") {
+		return fmt.Errorf("Failed: FDA label file link '%s' for product '%s' is not a link to a PDF file", p.FDALabelFile, p.BrandName)
+	}
+	// TODO send a HEAD request to make sure the link is reachable?
+	return nil
+}
+
 type product struct {
 	IngredientName      string        `json:"ingredient_name"`
 	BrandName           string        `json:"brand_name"`
@@ -204,6 +135,42 @@ type product struct {
 	FDALabelNeedsUpdate bool          `json:"fda_label_needs_update,omitempty"`
 	ColorClass          string        `json:"color_class,omitempty"`
 	ListPosition        int           `json:"list_position,omitempty"`
+}
+
+func (p product) Validate() error {
+	// Check that the unconstrained fields are not empty
+	if slices.Contains([]string{p.BrandName, p.IngredientName, p.DoseFrequency}, "") {
+		return fmt.Errorf("Failed: Brand name, ingredient name, and dose frequency cannot be empty for product '%s'", p.BrandName)
+	}
+	if len(p.Savings) == 0 {
+		return fmt.Errorf("Failed: Savings information is empty for product '%s'", p.BrandName)
+	}
+
+	// check the medicine type is one in the list
+	if err := medTypeEnum.CheckError(p.MedicineType); err != nil {
+		return errors.Join(fmt.Errorf("Failed: Medicine type '%s' for product '%s' is invalid. ", p.MedicineType, p.BrandName), err)
+	}
+
+	// check the administration route is one in the list
+	if err := adminRouteEnum.CheckError(p.AdminRoute); err != nil {
+		return errors.Join(fmt.Errorf("Failed: Administration route '%s' for product '%s' is invalid. ", p.AdminRoute, p.BrandName), err)
+	}
+
+	// validate each savings program's phone and link
+	for _, s := range p.Savings {
+		if err := s.Validate(); err != nil {
+			return fmt.Errorf("Failed: Savings program '%s' for product '%s' is invalid: %v", s.Description, p.BrandName, err)
+		}
+	}
+
+	// if there is an fda label link, validate it
+	if strings.TrimSpace(p.FDALabelFile) != "" {
+		if err := validateFDALabelLink(p); err != nil {
+			return fmt.Errorf("Failed: FDA label validation for product '%s': %v", p.BrandName, err)
+		}
+	}
+
+	return nil
 }
 
 // make the sort functions for products based on ListPosition
@@ -224,6 +191,29 @@ type savingsInfo struct {
 		CashPay             bool     `json:"cash_pay,omitempty"`
 		OtherCriteria       []string `json:"other_criteria,omitempty"`
 	} `json:"eligibility,omitempty"`
+}
+
+func (s savingsInfo) Validate() error {
+	phoneRe := regexp.MustCompile(`^1-\d{3}-\d{3}-\d{4}$`)
+	if strings.TrimSpace(s.Description) == "" {
+		panic("Savings description cannot be empty for product " + s.Description)
+	}
+	if strings.TrimSpace(s.Phone) != "" {
+		if !phoneRe.MatchString(s.Phone) {
+			panic(fmt.Sprintf("Phone number '%s' is not in the format 1-800-555-5555", s.Phone))
+		}
+	}
+	if strings.TrimSpace(s.Link) != "" {
+		if !strings.HasPrefix(s.Link, "http://") && !strings.HasPrefix(s.Link, "https://") {
+			fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", s.Link, s.Description)
+			os.Exit(1)
+		}
+	}
+	if err := savingsTypeEnum.CheckError(s.Type); err != nil {
+		panic(err)
+	}
+
+	return nil
 }
 
 func getCatalog(path string) ([]product, error) {
