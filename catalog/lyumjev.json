@@ -1,0 +1,22 @@
+{
+    "ingredient_name": "Insulin Lispro-AABC 100 Units/mL",
+    "brand_name": "Lyumjev",
+    "medicine_type": "Insulin",
+    "administration_route": "Subcutaneous Injection",
+    "dose_frequency": "Once Daily",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "$35 per month Insulin Savings Card",
+            "link": "https://insulins.lilly.com/lilly-insulin-value-program",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true
+            }
+        }
+    ],
+    "color_class": "gradient-pink",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/761109Orig1s000lbl.pdf",
+    "fda_label_file_updated": "2026-02-06"
+}

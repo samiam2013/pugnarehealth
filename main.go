@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -19,35 +20,35 @@ const repoPath = "./"
 // relative to the root of the repo, not the current working directory
 const medCatalogPath = "catalog/"
 
-var medTypes = map[string]struct{}{
-	"CGM":                     {},
-	"SGLT-2":                  {},
-	"GLP-1":                   {},
-	"DPP-4":                   {},
-	"Insulin Delivery System": {},
-	"Insulin":                 {},
-}
+var medTypeEnum = NewEnum([]string{
+	"CGM",
+	"SGLT-2",
+	"GLP-1",
+	"DPP-4",
+	"Insulin Delivery System",
+	"Insulin",
+})
 
-var adminRoutes = map[string]struct{}{
-	"Oral Tablet":            {},
-	"Subcutaneous Injection": {},
-	"Automatic Applicator":   {},
-	"Tubeless Insulin Pump":  {},
-}
+var adminRouteEnum = NewEnum([]string{
+	"Oral Tablet",
+	"Subcutaneous Injection",
+	"Automatic Applicator",
+	"Tubeless Insulin Pump",
+})
 
-var savingsTypes = map[string]struct{}{
-	"Copay Discount Card":                {},
-	"Patient Assistance Program":         {},
-	"Medicare Prescription Payment Plan": {},
-	"Free Trial Offer":                   {},
-}
+var savingsTypeEnum = NewEnum([]string{
+	"Copay Discount Card",
+	"Patient Assistance Program",
+	"Medicare Prescription Payment Plan",
+	"Free Trial Offer",
+})
 
 func main() {
 	var skipUpdateCheck bool
 	flag.BoolVar(&skipUpdateCheck, "skip-update-check", false, "Skip checking for FDA label updates using the OpenFDA API")
 	flag.Parse()
 
-	fmt.Println("starting webserver for pugnare.health")
+	fmt.Println("starting render...")
 	products, err := getCatalog(medCatalogPath)
 	if err != nil {
 		fmt.Println("Error getting catalog:", err)
@@ -93,17 +94,8 @@ func main() {
 	// validate the products
 	for _, p := range products {
 		// Check that the unconstrained fields are not empty
-		if strings.TrimSpace(p.BrandName) == "" {
-			fmt.Printf("Failed: Brand name is empty for ingredient '%s'\n", p.IngredientName)
-			os.Exit(1)
-		}
-		if strings.TrimSpace(p.IngredientName) == "" {
-			fmt.Printf("Failed: Ingredient name is empty for brand '%s'\n", p.BrandName)
-			os.Exit(1)
-		}
-		if strings.TrimSpace(p.DoseFrequency) == "" {
-			fmt.Printf("Failed: Dose frequency is empty for product '%s'\n", p.BrandName)
-			os.Exit(1)
+		if slices.Contains([]string{p.BrandName, p.IngredientName, p.DoseFrequency}, "") {
+			panic("Brand name, ingredient name, and dose frequency cannot be empty")
 		}
 		if len(p.Savings) == 0 {
 			fmt.Printf("Failed: Savings information is empty for product '%s'\n", p.BrandName)
@@ -111,35 +103,23 @@ func main() {
 		}
 
 		// check the medicine type is one in the list
-		if _, ok := medTypes[p.MedicineType]; !ok {
-			fmt.Printf("Failed: Medicine type '%s' for product '%s' is not in the recognized list\n", p.MedicineType, p.BrandName)
-			fmt.Printf("Recognized medicine types are:\n")
-			for k := range medTypes {
-				fmt.Printf(" - %s\n", k)
-			}
-			os.Exit(1)
+		if err := medTypeEnum.CheckError(p.MedicineType); err != nil {
+			panic(err)
 		}
 
 		// check the administration route is one in the list
-		if _, ok := adminRoutes[p.AdminRoute]; !ok {
-			fmt.Printf("Failed: Administration route '%s' for product '%s' is not in the recognized list\n", p.AdminRoute, p.BrandName)
-			fmt.Printf("Recognized administration routes are:\n")
-			for k := range adminRoutes {
-				fmt.Printf(" - %s\n", k)
-			}
-			os.Exit(1)
+		if err := adminRouteEnum.CheckError(p.AdminRoute); err != nil {
+			panic(err)
 		}
 
 		// validate each savings program's phone and link
 		for _, sp := range p.Savings {
 			if strings.TrimSpace(sp.Description) == "" {
-				fmt.Printf("Failed: Savings program description is empty for product '%s'\n", p.BrandName)
-				os.Exit(1)
+				panic("Savings description cannot be empty for product " + p.BrandName)
 			}
 			if strings.TrimSpace(sp.Phone) != "" {
 				if !phoneRe.MatchString(sp.Phone) {
-					fmt.Printf("Failed: Phone number '%s' for product '%s' is not in the format 1-800-555-5555\n", sp.Phone, p.BrandName)
-					os.Exit(1)
+					panic(fmt.Sprintf("Phone number '%s' for product '%s' is not in the format 1-800-555-5555", sp.Phone, p.BrandName))
 				}
 			}
 			if strings.TrimSpace(sp.Link) != "" {
@@ -148,13 +128,8 @@ func main() {
 					os.Exit(1)
 				}
 			}
-			if _, ok := savingsTypes[sp.Type]; !ok {
-				fmt.Printf("Failed: Savings program type '%s' for product '%s' is not in the recognized list\n", sp.Type, p.BrandName)
-				fmt.Printf("Recognized savings program types are:\n")
-				for k := range savingsTypes {
-					fmt.Printf(" - %s\n", k)
-				}
-				os.Exit(1)
+			if err := savingsTypeEnum.CheckError(sp.Type); err != nil {
+				panic(err)
 			}
 		}
 

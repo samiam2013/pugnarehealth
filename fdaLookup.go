@@ -121,7 +121,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		}
 
 		if resp.StatusCode != http.StatusOK {
-			return nil, errors.New("FDA API returned non-200 status: " + resp.Status)
+			return nil, fmt.Errorf("FDA API returned non-200 status (%d) url: %s", resp.StatusCode, u.String())
 		}
 		var fdaLabel fdaLabelData
 		if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
@@ -139,6 +139,10 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		// if there's more than one result, return an error
 		lastChecked := time.Time{}
 		for _, result := range fdaLabel.Results {
+			if len(result.SplProductDataElements) == 0 {
+				fmt.Println("Skipping FDA label result with empty spl_product_data_elements for brand name:", brandName, "URL:", u.String())
+				continue
+			}
 			dataElementsFirstWord := strings.Split(result.SplProductDataElements[0], " ")[0]
 			drugNameLower := strings.ToLower(dataElementsFirstWord)
 			brandNameLower := strings.ToLower(brandName)

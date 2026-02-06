@@ -1,0 +1,22 @@
+{
+    "ingredient_name": "Insulin Degludec 100 Units/mL",
+    "brand_name": "Tresiba",
+    "medicine_type": "Insulin",
+    "administration_route": "Subcutaneous Injection",
+    "dose_frequency": "Once Daily",
+    "savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $35 or no more than $99 per prescription",
+            "link": "https://www.novocare.com/diabetes/products/tresiba/savings-offer.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
+    "color_class": "gradient-lime",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/203314s018s020lbl.pdf",
+    "fda_label_file_updated": "2026-02-06"
+}
