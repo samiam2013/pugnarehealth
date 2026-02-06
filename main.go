@@ -290,5 +290,7 @@ func renderIndex(products []product) error {
 		return errors.Join(errors.New("failed executing template for index.html"), err)
 	}
 
+	fmt.Println(outputFile.Name() + " rendered successfully.")
+
 	return nil
 }

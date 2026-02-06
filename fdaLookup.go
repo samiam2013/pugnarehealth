@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"strings"
 	"time"
 
@@ -101,6 +102,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 	l := rate.NewLimiter(rate.Every(rateLimitSeconds*time.Second), 1)
 	results := make(map[string]time.Time)
 	for _, brandName := range brandNames {
+		fmt.Print("Checking FDA label for brand name:", brandName, "...")
 		if err := l.Wait(context.Background()); err != nil {
 			return nil, errors.Join(errors.New("error waiting for rate limiter"), err)
 		}
@@ -123,6 +125,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		if resp.StatusCode != http.StatusOK {
 			return nil, fmt.Errorf("FDA API returned non-200 status (%d) url: %s", resp.StatusCode, u.String())
 		}
+		fmt.Print(" status " + resp.Status + "...")
 		var fdaLabel fdaLabelData
 		if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
 			return nil, errors.Join(errors.New("failed to decode api json response"), err)
@@ -163,6 +166,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 				brandName + " URL: " + u.String())
 		}
 		results[brandName] = lastChecked
+		fmt.Println(" done.")
 	}
 	return results, nil
 }
@@ -171,6 +175,7 @@ func checkForLabelUpdates(products []product) error {
 	brandNames := []string{}
 	for _, p := range products {
 		if p.AdminRoute == "Automatic Applicator" || p.AdminRoute == "Tubeless Insulin Pump" {
+			fmt.Println("Skipping label update for:", p.BrandName)
 			continue // skip CGMs, pumps, etc without FDA labels
 		}
 		brandNames = append(brandNames, p.BrandName)
@@ -183,6 +188,9 @@ func checkForLabelUpdates(products []product) error {
 
 	// print out the results
 	for i, p := range products {
+		if !slices.Contains(brandNames, p.BrandName) {
+			continue // skip products we didn't check
+		}
 		recency, ok := recencyResults[p.BrandName]
 		if !ok {
 			return fmt.Errorf("no FDA label recency found for brand name: %s", p.BrandName)
