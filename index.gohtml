@@ -317,7 +317,7 @@
                                 {{end}}
                             </div>
 
-                            {{if or .FDALabelFile .FDALabelNeedsUpdate .FDALabelNotFound}}
+                            {{if or .FDALabelFile .FDALabelNeedsUpdate .FDALabelRecencyNotFound}}
                             <div class="drug-fda-actions">
                                 {{if .FDALabelFile}}
                                 <a href="{{.FDALabelFile}}" target="_blank" rel="noopener noreferrer"
@@ -330,12 +330,12 @@
                                 {{end}}
                                 {{if .FDALabelNeedsUpdate}}
                                 <div class="fda-label-update-notice btn btn-tertiary">
-                                    <span>⚠️ Needs Update</span>
+                                    <span>⚠️ FDA Label link outdated</span>
                                 </div>
                                 {{end}}
                                 {{if .FDALabelRecencyNotFound}}
                                 <div class="fda-label-not-found-notice btn btn-tertiary">
-                                    <span>⚠️ Label Recency Not Found</span>
+                                    <span>⚠️ Unable to check FDA label for update</span>
                                 </div>
                                 {{end}}
                             </div>
