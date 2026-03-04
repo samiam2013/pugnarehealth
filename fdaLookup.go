@@ -208,7 +208,7 @@ func checkForLabelUpdates(products []product) error {
 		}
 		if recency.IsZero() {
 			fmt.Printf("No valid FDA label found for %s. Marking as not found.\n", p.BrandName)
-			products[i].FDALabelNotFound = true
+			products[i].FDALabelRecencyNotFound = true
 		}
 	}
 	return nil
