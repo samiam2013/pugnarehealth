@@ -49,5 +49,6 @@
             }
         }
     ],
+    "skip_fda_label": true,
     "color_class": "gradient-emerald"
 }

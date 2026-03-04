@@ -130,9 +130,11 @@ type product struct {
 	AdminRoute          string        `json:"administration_route"`
 	DoseFrequency       string        `json:"dose_frequency,omitempty"`
 	Savings             []savingsInfo `json:"savings"`
+	SkipFDALabel        bool          `json:"skip_fda_label,omitempty"`
 	FDALabelFile        string        `json:"fda_label_file,omitempty"`
 	FDALabelUpdated     string        `json:"fda_label_file_updated,omitempty"` // YYYY-MM-DD
 	FDALabelNeedsUpdate bool          `json:"fda_label_needs_update,omitempty"`
+	FDALabelNotFound    bool          `json:"fda_label_not_found,omitempty"` // if we couldn't find a matching label in the FDA lookup
 	ColorClass          string        `json:"color_class,omitempty"`
 	ListPosition        int           `json:"list_position,omitempty"`
 }

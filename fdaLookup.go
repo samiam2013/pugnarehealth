@@ -162,8 +162,9 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 			}
 		}
 		if lastChecked.IsZero() {
-			return nil, errors.New("no brand-matching FDA label found for brand name: " +
-				brandName + " URL: " + u.String())
+			results[brandName] = time.Time{} // no valid results found, but we did check, so set to zero time
+			fmt.Println(" no valid results found.")
+			continue
 		}
 		results[brandName] = lastChecked
 		fmt.Println(" done.")
@@ -174,9 +175,8 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 func checkForLabelUpdates(products []product) error {
 	brandNames := []string{}
 	for _, p := range products {
-		if p.AdminRoute == "Automatic Applicator" || p.AdminRoute == "Tubeless Insulin Pump" {
-			fmt.Println("Skipping label update for:", p.BrandName)
-			continue // skip CGMs, pumps, etc without FDA labels
+		if p.SkipFDALabel {
+			continue
 		}
 		brandNames = append(brandNames, p.BrandName)
 	}
@@ -205,6 +205,10 @@ func checkForLabelUpdates(products []product) error {
 					p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
 			*/
 			products[i].FDALabelNeedsUpdate = true
+		}
+		if recency.IsZero() {
+			fmt.Printf("No valid FDA label found for %s. Marking as not found.\n", p.BrandName)
+			products[i].FDALabelNotFound = true
 		}
 	}
 	return nil
