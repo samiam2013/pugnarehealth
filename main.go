@@ -45,11 +45,11 @@ var savingsTypeEnum = NewEnum([]string{
 
 func main() {
 	var skipUpdateCheck bool
-	flag.BoolVar(&skipUpdateCheck, "skip-update-check", false, "Skip checking for FDA label updates using the OpenFDA API")
+	flag.BoolVar(&skipUpdateCheck, "skip-update-check", false, "Render normally but don't check FDA api for label updates")
 	flag.Parse()
 
 	fmt.Println("starting render...")
-	products, err := getCatalog(medCatalogPath)
+	products, err := getCatalog()
 	if err != nil {
 		fmt.Println("Error getting catalog:", err)
 		os.Exit(1)
@@ -100,7 +100,7 @@ func validateFDALabelLink(p product) error {
 	// make sure the updated date is in YYYY-MM-DD format
 	updateTime, err := time.Parse("2006-01-02", p.FDALabelUpdated)
 	if err != nil {
-		return errors.Join(fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format\n", p.FDALabelUpdated, p.BrandName, err))
+		return fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format: %w\n", p.FDALabelUpdated, p.BrandName, err)
 	}
 	// it's impossible to have updated the label in the future
 	if updateTime.After(time.Now()) {
@@ -198,27 +198,26 @@ type savingsInfo struct {
 func (s savingsInfo) Validate() error {
 	phoneRe := regexp.MustCompile(`^1-\d{3}-\d{3}-\d{4}$`)
 	if strings.TrimSpace(s.Description) == "" {
-		panic("Savings description cannot be empty for product " + s.Description)
+		return fmt.Errorf("Savings description cannot be empty for product '%s'", s.Description)
 	}
 	if strings.TrimSpace(s.Phone) != "" {
 		if !phoneRe.MatchString(s.Phone) {
-			panic(fmt.Sprintf("Phone number '%s' is not in the format 1-800-555-5555", s.Phone))
+			return fmt.Errorf("Phone number '%s' is not in the format 1-800-555-5555", s.Phone)
 		}
 	}
 	if strings.TrimSpace(s.Link) != "" {
 		if !strings.HasPrefix(s.Link, "http://") && !strings.HasPrefix(s.Link, "https://") {
-			fmt.Printf("Failed: Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)\n", s.Link, s.Description)
-			os.Exit(1)
+			return fmt.Errorf("Link '%s' for product '%s' is not a valid URL (must start with http:// or https://)", s.Link, s.Description)
 		}
 	}
 	if err := savingsTypeEnum.CheckError(s.Type); err != nil {
-		panic(err)
+		return fmt.Errorf("Invalid savings type '%s' for product '%s': %w", s.Type, s.Description, err)
 	}
 
 	return nil
 }
 
-func getCatalog(path string) ([]product, error) {
+func getCatalog() ([]product, error) {
 	// get the list of files in that folder, accumulate files that end in .json
 	files := []string{}
 	entries, err := os.ReadDir(repoPath + medCatalogPath)
@@ -230,7 +229,7 @@ func getCatalog(path string) ([]product, error) {
 			files = append(files, entry.Name())
 		}
 	}
-	fmt.Printf("Found %d JSON files in %s\n", len(files), path)
+	fmt.Printf("Found %d JSON files in %s\n", len(files), medCatalogPath)
 	// for each file, read and parse the JSON into a product struct, accumulate into a slice
 	products := []product{}
 	for _, file := range files {

@@ -121,6 +121,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		if err != nil {
 			return nil, errors.Join(errors.New("error making FDA API request"), err)
 		}
+		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
 			return nil, fmt.Errorf("FDA API returned non-200 status (%d) url: %s", resp.StatusCode, u.String())
@@ -136,7 +137,9 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		}
 
 		if len(fdaLabel.Results) == 0 {
-			return nil, errors.New("no FDA label results found for brand name: " + brandName + " URL: " + u.String())
+			fmt.Println("no FDA label results found for brand name: " + brandName + " URL: " + u.String())
+			results[brandName] = time.Time{} // set to zero time to indicate we checked but found no results
+			continue
 		}
 
 		// if there's more than one result, return an error
