@@ -104,7 +104,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 	for _, brandName := range brandNames {
 		fmt.Print("Checking FDA label for brand name:", brandName, "...")
 		if err := l.Wait(context.Background()); err != nil {
-			return nil, errors.Join(errors.New("error waiting for rate limiter"), err)
+			return nil, fmt.Errorf("error waiting for rate limiter: %w", err)
 		}
 		u, _ := url.Parse(fdaLabelAPIBase)
 		q := u.Query()
@@ -119,7 +119,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		//fmt.Println("Making FDA API request for brand name:", brandName, "URL:", u.String())
 		resp, err := c.Do(req)
 		if err != nil {
-			return nil, errors.Join(errors.New("error making FDA API request"), err)
+			return nil, fmt.Errorf("error making FDA API request: %w", err)
 		}
 		defer resp.Body.Close()
 
@@ -129,11 +129,11 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		fmt.Print(" status " + resp.Status + "...")
 		var fdaLabel fdaLabelData
 		if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
-			return nil, errors.Join(errors.New("failed to decode api json response"), err)
+			return nil, fmt.Errorf("failed to decode api json response: %w", err)
 		}
 
 		if err := resp.Body.Close(); err != nil {
-			return nil, errors.Join(errors.New("error closing FDA API response body"), err)
+			return nil, fmt.Errorf("error closing FDA API response body: %w", err)
 		}
 
 		if len(fdaLabel.Results) == 0 {
@@ -158,7 +158,7 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 			}
 			effectiveTime, err := time.Parse("20060102", result.EffectiveTime)
 			if err != nil {
-				return nil, errors.Join(errors.New("error parsing effective time from FDA label"), err)
+				return nil, fmt.Errorf("error parsing effective time from FDA label: %w", err)
 			}
 			if effectiveTime.After(lastChecked) {
 				lastChecked = effectiveTime

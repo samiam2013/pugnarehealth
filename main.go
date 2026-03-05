@@ -10,7 +10,6 @@ import (
 	"os"
 	"regexp"
 	"slices"
-	"sort"
 	"strings"
 	"time"
 )
@@ -84,10 +83,11 @@ func main() {
 		}
 	}
 	// sort the sortedProducts slice
-	sp := byListPosition(sortedProducts)
-	sort.Sort(sp)
+	slices.SortFunc(sortedProducts, func(a, b product) int {
+		return a.ListPosition - b.ListPosition
+	})
 	// append the unsorted products to the end
-	sortedProducts = append(sp, unsortedProducts...)
+	sortedProducts = append(sortedProducts, unsortedProducts...)
 	products = sortedProducts
 
 	if err = renderIndex(products); err != nil {
@@ -100,7 +100,7 @@ func validateFDALabelLink(p product) error {
 	// make sure the updated date is in YYYY-MM-DD format
 	updateTime, err := time.Parse("2006-01-02", p.FDALabelUpdated)
 	if err != nil {
-		return fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format: %w\n", p.FDALabelUpdated, p.BrandName, err)
+		return fmt.Errorf("Failed: FDA label updated date '%s' for product '%s' is not in YYYY-MM-DD format: %w", p.FDALabelUpdated, p.BrandName, err)
 	}
 	// it's impossible to have updated the label in the future
 	if updateTime.After(time.Now()) {
@@ -174,13 +174,6 @@ func (p product) Validate() error {
 
 	return nil
 }
-
-// make the sort functions for products based on ListPosition
-type byListPosition []product
-
-func (a byListPosition) Len() int           { return len(a) }
-func (a byListPosition) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a byListPosition) Less(i, j int) bool { return a[i].ListPosition < a[j].ListPosition }
 
 type savingsInfo struct {
 	Type        string `json:"type"`
