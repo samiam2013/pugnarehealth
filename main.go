@@ -55,7 +55,7 @@ func main() {
 	}
 
 	if !skipUpdateCheck {
-		if err = checkForLabelUpdates(products); err != nil {
+		if err := products.checkForLabelUpdates(); err != nil {
 			fmt.Println("Error checking for FDA label updates:", err)
 			os.Exit(1)
 		}
@@ -142,7 +142,9 @@ type product struct {
 func (p product) Validate() error {
 	// Check that the unconstrained fields are not empty
 	if slices.Contains([]string{p.BrandName, p.IngredientName, p.DoseFrequency}, "") {
-		return fmt.Errorf("Failed: Brand name, ingredient name, and dose frequency cannot be empty for product '%s'", p.BrandName)
+		return fmt.Errorf("Failed: Brand name '%s', ingredient name '%s', "+
+			"and dose frequency '%s' cannot be empty for product '%s'",
+			p.BrandName, p.IngredientName, p.DoseFrequency, p.BrandName)
 	}
 	if len(p.Savings) == 0 {
 		return fmt.Errorf("Failed: Savings information is empty for product '%s'", p.BrandName)
@@ -191,7 +193,7 @@ type savingsInfo struct {
 func (s savingsInfo) Validate() error {
 	phoneRe := regexp.MustCompile(`^1-\d{3}-\d{3}-\d{4}$`)
 	if strings.TrimSpace(s.Description) == "" {
-		return fmt.Errorf("Savings description cannot be empty for product '%s'", s.Description)
+		return errors.New("Savings description cannot be empty for product")
 	}
 	if strings.TrimSpace(s.Phone) != "" {
 		if !phoneRe.MatchString(s.Phone) {
@@ -210,7 +212,7 @@ func (s savingsInfo) Validate() error {
 	return nil
 }
 
-func getCatalog() ([]product, error) {
+func getCatalog() (productList, error) {
 	// get the list of files in that folder, accumulate files that end in .json
 	files := []string{}
 	entries, err := os.ReadDir(repoPath + medCatalogPath)

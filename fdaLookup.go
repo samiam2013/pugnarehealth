@@ -121,14 +121,15 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error making FDA API request: %w", err)
 		}
-		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
+			_ = resp.Body.Close() // close the body before returning
 			return nil, fmt.Errorf("FDA API returned non-200 status (%d) url: %s", resp.StatusCode, u.String())
 		}
 		fmt.Print(" status " + resp.Status + "...")
 		var fdaLabel fdaLabelData
 		if err = json.NewDecoder(resp.Body).Decode(&fdaLabel); err != nil {
+			_ = resp.Body.Close()
 			return nil, fmt.Errorf("failed to decode api json response: %w", err)
 		}
 
@@ -175,9 +176,11 @@ func fdaLabelRecencyLookup(brandNames []string) (map[string]time.Time, error) {
 	return results, nil
 }
 
-func checkForLabelUpdates(products []product) error {
+type productList []product
+
+func (list productList) checkForLabelUpdates() error {
 	brandNames := []string{}
-	for _, p := range products {
+	for _, p := range list {
 		if p.SkipFDALabel {
 			continue
 		}
@@ -190,7 +193,7 @@ func checkForLabelUpdates(products []product) error {
 	}
 
 	// print out the results
-	for i, p := range products {
+	for i, p := range list {
 		if !slices.Contains(brandNames, p.BrandName) {
 			continue // skip products we didn't check
 		}
@@ -207,11 +210,11 @@ func checkForLabelUpdates(products []product) error {
 				fmt.Printf("FDA label for %s has been updated since last recorded date. New effective date: %s (was %s)\n",
 					p.BrandName, recency.Format("2006-01-02"), lastUpdated.Format("2006-01-02"))
 			*/
-			products[i].FDALabelNeedsUpdate = true
+			list[i].FDALabelNeedsUpdate = true
 		}
 		if recency.IsZero() {
 			fmt.Printf("No valid FDA label found for %s. Marking as not found.\n", p.BrandName)
-			products[i].FDALabelRecencyNotFound = true
+			list[i].FDALabelRecencyNotFound = true
 		}
 	}
 	return nil
