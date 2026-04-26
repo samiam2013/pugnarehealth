@@ -1,0 +1,24 @@
+{
+    "list_position": 6,
+    "ingredient_name": "Orforglipron",
+    "brand_name": "Foundayo",
+    "medicine_type": "GLP-1",
+    "administration_route": "Oral Tablet",
+    "dose_frequency": "Once Daily",
+    "savings": [
+        {
+            "type": "Patient Assistance Program",
+            "description": "Eli Lilly's assistance for eligible patients",
+            "phone": "1-800-545-5979",
+            "link": "https://www.lilly.com/healthcare-payers/patient-assistance-program",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": true
+            }
+        }
+    ],
+    "color_class": "gradient-green",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/xxxxxxlbl.pdf",
+    "fda_label_file_updated": "2026-04-26"
+}
