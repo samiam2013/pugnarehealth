@@ -1,0 +1,22 @@
+{
+    "ingredient_name": "Insulin icodec-abae 700 Units/mL",
+    "brand_name": "Awiqli",
+    "medicine_type": "Insulin",
+    "administration_route": "Subcutaneous Injection",
+    "dose_frequency": "Once Weekly",
+"savings": [
+        {
+            "type": "Copay Discount Card",
+            "description": "Pay as little as $35 or no more than $55 for a 1-month supply",
+            "link": "https://www.novocare.com/diabetes/products/awiqli/savings-offer.html",
+            "eligibility": {
+                "private_insurance": true,
+                "government_insurance": false,
+                "cash_pay": false
+            }
+        }
+    ],
+    "color_class": "gradient-emerald",
+    "fda_label_file": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/761326Orig2s000lbl.pdf",
+    "fda_label_file_updated": "2026-09-01"
+}
